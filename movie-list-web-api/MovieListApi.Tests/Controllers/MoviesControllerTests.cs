@@ -1,8 +1,8 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MovieListApi.Controllers;
-using MovieListApi.Entities;
+using MovieListApi.Models.Entities;
+using MovieListApi.Models.Results;
 using MovieListApi.Services;
 
 namespace MovieListApi.Tests.Controllers;
@@ -29,11 +29,12 @@ public class MoviesControllerTests
         var actionResult = await controller.GetMoviesToWatch();
         var objectResult = actionResult as ObjectResult;
 
-        var collectionResult = objectResult?.Value as ICollection<Movie>;
+        var collectionResult = objectResult?.Value as ICollection<MovieResult>;
 
         // Then
         Assert.IsType<OkObjectResult>(actionResult);
-        Assert.IsAssignableFrom<ICollection<Movie>>(objectResult?.Value);
+        Assert.IsAssignableFrom<ICollection<MovieResult>>(objectResult?.Value);
         Assert.Equal(movieList.Count, collectionResult?.Count);
+        Assert.True(collectionResult?.SequenceEqual(movieList.Select(x => new MovieResult(x))));
     }
 }

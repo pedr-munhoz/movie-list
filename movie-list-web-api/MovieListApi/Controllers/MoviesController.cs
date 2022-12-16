@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MovieListApi.Models.Results;
 using MovieListApi.Services;
 
 namespace MovieListApi.Controllers;
@@ -19,6 +20,6 @@ public class MoviesController : ControllerBase
     public async Task<IActionResult> GetMoviesToWatch()
     {
         var movies = await _moviesManager.GetMoviesToWatch();
-        return Ok(movies);
+        return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 }

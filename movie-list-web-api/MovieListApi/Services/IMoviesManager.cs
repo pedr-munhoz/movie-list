@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MovieListApi.Entities;
+using MovieListApi.Models.Entities;
 
 namespace MovieListApi.Services;
 
