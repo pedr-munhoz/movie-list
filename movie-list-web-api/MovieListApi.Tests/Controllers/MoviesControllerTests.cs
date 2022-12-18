@@ -4,6 +4,8 @@ using MovieListApi.Controllers;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
 using MovieListApi.Services;
+using MovieListApi.Tests.Factories.Entities;
+using MovieListApi.Tests.Factories.Services;
 
 namespace MovieListApi.Tests.Controllers;
 
@@ -13,16 +15,8 @@ public class MoviesControllerTests
     public async void ShouldListMoviesToWatch()
     {
         // Given
-        var manager = new Mock<IMoviesManager>();
-
-        var movieList = new List<Movie>();
-
-        movieList.Add(new Movie { Name = "Movie1" });
-        movieList.Add(new Movie { Name = "Movie2" });
-        movieList.Add(new Movie { Name = "Movie3" });
-
-        manager.Setup(x => x.GetMoviesToWatch()).ReturnsAsync(movieList);
-
+        var movieList = new List<Movie>().Build();
+        var manager = new Mock<IMoviesManager>().MockGetMoviesToWatch(movies: movieList);
         var controller = new MoviesController(manager.Object);
 
         // When

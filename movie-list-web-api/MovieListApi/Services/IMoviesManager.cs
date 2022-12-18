@@ -9,4 +9,5 @@ namespace MovieListApi.Services;
 public interface IMoviesManager
 {
     public Task<ICollection<Movie>> GetMoviesToWatch();
+    object Setup(Func<object, object> value);
 }
