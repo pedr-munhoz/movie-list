@@ -21,13 +21,11 @@ public class MoviesControllerTests
 
         // When
         var actionResult = await controller.GetMoviesToWatch();
-        var objectResult = actionResult as ObjectResult;
-
-        var collectionResult = objectResult?.Value as ICollection<MovieResult>;
+        var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
-        Assert.IsType<OkObjectResult>(actionResult);
-        Assert.IsAssignableFrom<ICollection<MovieResult>>(objectResult?.Value);
+        Assert.True(actionResult.IsOkResult());
+        Assert.True(successfullyParsed);
         Assert.Equal(movieList.Count, collectionResult?.Count);
         Assert.True(collectionResult?.SequenceEqual(movieList.Select(x => new MovieResult(x))));
     }
