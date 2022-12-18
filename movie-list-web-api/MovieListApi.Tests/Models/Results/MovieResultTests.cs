@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
+using MovieListApi.Tests.Comparators;
+using MovieListApi.Tests.Factories.Entities;
 using Xunit;
 
 namespace MovieListApi.Tests.Models.Results;
@@ -14,22 +16,13 @@ public class MovieResultTests
     public void ShouldInstantiate()
     {
         // Given
-        var entity = new Movie
-        {
-            Id = new Random().Next(),
-            Name = Guid.NewGuid().ToString(),
-            ReleaseDate = DateTime.Now,
-            Country = Guid.NewGuid().ToString(),
-        };
+        var entity = new Movie().Build();
 
         // When
         var result = new MovieResult(entity);
 
         // Then
-        Assert.Equal(entity.Id.ToString(), result.Id);
-        Assert.Equal(entity.Name, result.Name);
-        Assert.Equal(entity.ReleaseDate, result.ReleaseDate);
-        Assert.Equal(entity.Country, result.Country);
+        Assert.True(entity.IsEquivalent(result));
     }
 
     [Fact]
