@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MovieListApi.Controllers;
 using MovieListApi.Models.Entities;

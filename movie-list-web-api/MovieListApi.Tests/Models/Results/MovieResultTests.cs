@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
 using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
-using Xunit;
 
 namespace MovieListApi.Tests.Models.Results;
 

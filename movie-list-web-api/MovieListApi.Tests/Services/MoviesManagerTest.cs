@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using MovieListApi.Infrastructure.Database;
 using MovieListApi.Models.Entities;
 using MovieListApi.Services;
