@@ -29,4 +29,23 @@ public class MoviesControllerTests
         Assert.Equal(movieList.Count, collectionResult?.Count);
         Assert.True(collectionResult?.SequenceEqual(movieList.Select(x => new MovieResult(x))));
     }
+
+    [Fact]
+    public async void ShouldListWatchedMovies()
+    {
+        // Given
+        var movieList = new List<Movie>().Build().Watched();
+        var manager = new Mock<IMoviesManager>().MockGetMoviesToWatch(movies: movieList);
+        var controller = new MoviesController(manager.Object);
+
+        // When
+        var actionResult = await controller.GetMoviesToWatch();
+        var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
+
+        // Then
+        Assert.True(actionResult.IsOkResult());
+        Assert.True(successfullyParsed);
+        Assert.Equal(movieList.Count, collectionResult?.Count);
+        Assert.True(collectionResult?.SequenceEqual(movieList.Select(x => new MovieResult(x))));
+    }
 }

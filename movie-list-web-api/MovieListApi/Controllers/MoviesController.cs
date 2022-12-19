@@ -22,4 +22,12 @@ public class MoviesController : ControllerBase
         var movies = await _moviesManager.GetMoviesToWatch();
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
+
+    [HttpGet]
+    [Route("to-watch")]
+    public async Task<IActionResult> GetWatchedMovies()
+    {
+        var movies = await _moviesManager.GetWatchedMovies();
+        return Ok(movies.Select(x => new MovieResult(x)).ToList());
+    }
 }

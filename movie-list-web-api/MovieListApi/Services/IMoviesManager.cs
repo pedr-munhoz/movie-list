@@ -8,5 +8,6 @@ namespace MovieListApi.Services;
 
 public interface IMoviesManager
 {
-    public Task<ICollection<Movie>> GetMoviesToWatch();
+    Task<ICollection<Movie>> GetMoviesToWatch();
+    Task<ICollection<Movie>> GetWatchedMovies();
 }

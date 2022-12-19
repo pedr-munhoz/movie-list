@@ -34,4 +34,12 @@ public static class MovieFactory
 
         return entities;
     }
+
+    public static List<Movie> Watched(this List<Movie> entities)
+    {
+        foreach (var entity in entities)
+            entity.Watched = true;
+
+        return entities;
+    }
 }

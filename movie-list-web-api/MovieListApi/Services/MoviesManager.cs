@@ -19,4 +19,9 @@ public class MoviesManager : IMoviesManager
 
         return entities;
     }
+
+    public Task<ICollection<Movie>> GetWatchedMovies()
+    {
+        throw new NotImplementedException();
+    }
 }
