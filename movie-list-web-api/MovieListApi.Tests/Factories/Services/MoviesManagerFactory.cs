@@ -43,4 +43,13 @@ public static class MoviesManagerFactory
 
         return service;
     }
+
+    public static Mock<IMoviesManager> MockInternalFailureToAddMovieToWatch(
+        this Mock<IMoviesManager> service,
+        MovieViewModel viewModel)
+    {
+        service.Setup(x => x.AddMovieToWatch(viewModel)).ReturnsAsync((true, null));
+
+        return service;
+    }
 }

@@ -86,8 +86,32 @@ public class MoviesControllerTests
 
         // When
         var actionResult = await controller.AddMovieToWatch(viewModel);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
         Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
+    }
+
+    [Fact]
+    public async Task ShouldHandleSucessButNoMovieAsFailure()
+    {
+        // Given
+        var viewModel = new MovieViewModel();
+        var entity = new Movie().Build();
+
+        var manager = new Mock<IMoviesManager>().MockInternalFailureToAddMovieToWatch(viewModel: viewModel);
+
+        var controller = new MoviesController(manager.Object);
+
+        // When
+        var actionResult = await controller.AddMovieToWatch(viewModel);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
+
+        // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
     }
 }
