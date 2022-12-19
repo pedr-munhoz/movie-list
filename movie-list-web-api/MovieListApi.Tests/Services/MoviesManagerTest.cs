@@ -18,7 +18,7 @@ public class MoviesManagerTest
         _manager = new MoviesManager(_dbContext);
     }
     [Fact]
-    public async void ShouldGetMoviesToWatch()
+    public async Task ShouldGetMoviesToWatch()
     {
         // Given
         var movieList = new List<Movie>().Build();
@@ -38,7 +38,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async void ShouldGetWatchedMovies()
+    public async Task ShouldGetWatchedMovies()
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();

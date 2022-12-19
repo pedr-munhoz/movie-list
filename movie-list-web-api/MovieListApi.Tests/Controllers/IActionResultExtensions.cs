@@ -19,6 +19,17 @@ public static class IActionResultExtensions
         return false;
     }
 
+    public static bool IsUnprocessableEntityResult(this IActionResult actionResult)
+    {
+        if (actionResult is UnprocessableEntityObjectResult)
+            return true;
+
+        if (actionResult is UnprocessableEntityResult)
+            return true;
+
+        return false;
+    }
+
     public static (bool sucess, T? result) Parse<T>(this IActionResult actionResult)
         where T : class
     {

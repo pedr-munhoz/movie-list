@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MovieListApi.Models.Results;
+using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
 
 namespace MovieListApi.Controllers;
@@ -29,5 +30,17 @@ public class MoviesController : ControllerBase
     {
         var movies = await _moviesManager.GetWatchedMovies();
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
+    }
+
+    [HttpPost]
+    [Route("to-watch")]
+    public async Task<IActionResult> AddMovieToWatch([FromBody] MovieViewModel model)
+    {
+        var (sucess, movie) = await _moviesManager.AddMovieToWatch(model);
+
+        if (!sucess || movie is null)
+            return UnprocessableEntity("Failed to add movie to watch");
+
+        return Ok(new MovieResult(movie));
     }
 }
