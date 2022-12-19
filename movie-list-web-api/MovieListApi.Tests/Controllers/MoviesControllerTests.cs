@@ -12,16 +12,24 @@ namespace MovieListApi.Tests.Controllers;
 
 public class MoviesControllerTests
 {
+    private readonly Mock<IMoviesManager> _manager;
+    private readonly MoviesController _controller;
+
+    public MoviesControllerTests()
+    {
+        _manager = new Mock<IMoviesManager>();
+        _controller = new MoviesController(_manager.Object);
+    }
+
     [Fact]
     public async Task ShouldListMoviesToWatch()
     {
         // Given
         var movieList = new List<Movie>().Build();
-        var manager = new Mock<IMoviesManager>().MockGetMoviesToWatch(movies: movieList);
-        var controller = new MoviesController(manager.Object);
+        _manager.MockGetMoviesToWatch(movies: movieList);
 
         // When
-        var actionResult = await controller.GetMoviesToWatch();
+        var actionResult = await _controller.GetMoviesToWatch();
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -36,11 +44,10 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
-        var manager = new Mock<IMoviesManager>().MockGetWatchedMovies(movies: movieList);
-        var controller = new MoviesController(manager.Object);
+        _manager.MockGetWatchedMovies(movies: movieList);
 
         // When
-        var actionResult = await controller.GetWatchedMovies();
+        var actionResult = await _controller.GetWatchedMovies();
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -57,13 +64,10 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        var manager = new Mock<IMoviesManager>()
-            .MockAddMovieToWatch(viewModel: viewModel, entity: entity);
-
-        var controller = new MoviesController(manager.Object);
+        _manager.MockAddMovieToWatch(viewModel: viewModel, entity: entity);
 
         // When
-        var actionResult = await controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.AddMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
@@ -79,12 +83,10 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        var manager = new Mock<IMoviesManager>().MockFailureToAddMovieToWatch(viewModel: viewModel);
-
-        var controller = new MoviesController(manager.Object);
+        _manager.MockFailureToAddMovieToWatch(viewModel: viewModel);
 
         // When
-        var actionResult = await controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.AddMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -100,12 +102,10 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        var manager = new Mock<IMoviesManager>().MockInternalFailureToAddMovieToWatch(viewModel: viewModel);
-
-        var controller = new MoviesController(manager.Object);
+        _manager.MockInternalFailureToAddMovieToWatch(viewModel: viewModel);
 
         // When
-        var actionResult = await controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.AddMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
