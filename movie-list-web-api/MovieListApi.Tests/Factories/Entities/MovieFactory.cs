@@ -18,6 +18,13 @@ public static class MovieFactory
         return entity;
     }
 
+    public static Movie Watched(this Movie entity)
+    {
+        entity.Watched = true;
+
+        return entity;
+    }
+
     public static List<Movie> Build(this List<Movie> entities)
     {
         var count = _random.Next(50);

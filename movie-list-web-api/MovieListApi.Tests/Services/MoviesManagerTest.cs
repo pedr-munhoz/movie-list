@@ -34,4 +34,24 @@ public class MoviesManagerTest
         Assert.Equal(movieList.Count, result.Count);
         Assert.True(result.SequenceEqual(movieList));
     }
+
+    [Fact]
+    public async void ShouldNotGetMoviesWatched()
+    {
+        // Given
+        var movieList = new List<Movie>().Build();
+        await _dbContext.Movies.AddRangeAsync(movieList);
+
+        var movie = new Movie().Build().Watched();
+        await _dbContext.Movies.AddAsync(movie);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var result = await _manager.GetMoviesToWatch();
+
+        // Then
+        Assert.Equal(movieList.Count, result.Count);
+        Assert.True(result.SequenceEqual(movieList));
+    }
 }
