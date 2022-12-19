@@ -11,4 +11,5 @@ public class Movie
     public string Name { get; set; } = null!;
     public DateTime? ReleaseDate { get; set; }
     public string? Country { get; set; }
+    public bool Watched { get; set; }
 }
