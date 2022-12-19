@@ -20,8 +20,10 @@ public class MoviesManager : IMoviesManager
         return entities;
     }
 
-    public Task<ICollection<Movie>> GetWatchedMovies()
+    public async Task<ICollection<Movie>> GetWatchedMovies()
     {
-        throw new NotImplementedException();
+        var entities = await _dbContext.Movies.Where(x => x.Watched).ToListAsync();
+
+        return entities;
     }
 }

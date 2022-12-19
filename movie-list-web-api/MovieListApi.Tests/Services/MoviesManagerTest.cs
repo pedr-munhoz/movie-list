@@ -17,26 +17,8 @@ public class MoviesManagerTest
         _dbContext = MockDbContextFactory.BuildInMemory<MoviesDbContext>();
         _manager = new MoviesManager(_dbContext);
     }
-
     [Fact]
     public async void ShouldGetMoviesToWatch()
-    {
-        // Given
-        var movieList = new List<Movie>().Build();
-
-        await _dbContext.Movies.AddRangeAsync(movieList);
-        await _dbContext.SaveChangesAsync();
-
-        // When
-        var result = await _manager.GetMoviesToWatch();
-
-        // Then
-        Assert.Equal(movieList.Count, result.Count);
-        Assert.True(result.SequenceEqual(movieList));
-    }
-
-    [Fact]
-    public async void ShouldNotGetMoviesWatched()
     {
         // Given
         var movieList = new List<Movie>().Build();
@@ -49,6 +31,26 @@ public class MoviesManagerTest
 
         // When
         var result = await _manager.GetMoviesToWatch();
+
+        // Then
+        Assert.Equal(movieList.Count, result.Count);
+        Assert.True(result.SequenceEqual(movieList));
+    }
+
+    [Fact]
+    public async void ShouldGetWatchedMovies()
+    {
+        // Given
+        var movieList = new List<Movie>().Build().Watched();
+        await _dbContext.Movies.AddRangeAsync(movieList);
+
+        var movie = new Movie().Build();
+        await _dbContext.Movies.AddAsync(movie);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var result = await _manager.GetWatchedMovies();
 
         // Then
         Assert.Equal(movieList.Count, result.Count);
