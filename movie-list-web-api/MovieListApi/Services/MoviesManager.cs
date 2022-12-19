@@ -19,15 +19,20 @@ public class MoviesManager : IMoviesManager
         var entity = ModelToEntity(model);
 
         await _dbContext.Movies.AddAsync(entity);
-
         await _dbContext.SaveChangesAsync();
 
         return (true, entity);
     }
 
-    public Task<(bool success, Movie? movie)> AddWatchedMovie(MovieViewModel model)
+    public async Task<(bool success, Movie? movie)> AddWatchedMovie(MovieViewModel model)
     {
-        throw new NotImplementedException();
+        var entity = ModelToEntity(model);
+        entity.Watched = true;
+
+        await _dbContext.Movies.AddAsync(entity);
+        await _dbContext.SaveChangesAsync();
+
+        return (true, entity);
     }
 
     public async Task<ICollection<Movie>> GetMoviesToWatch()

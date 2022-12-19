@@ -77,4 +77,22 @@ public class MoviesManagerTest
         Assert.Single(entities);
         Assert.Equal(entities.First(), result);
     }
+
+    [Fact]
+    public async Task ShouldAddWatched()
+    {
+        // Given
+        var viewModel = new MovieViewModel().Build();
+
+        // When
+        var (success, result) = await _manager.AddWatchedMovie(viewModel);
+        var entities = await _dbContext.Movies.ToListAsync();
+
+        // Then
+        Assert.True(success);
+        Assert.True(viewModel.IsEquivalent(result));
+        Assert.True(result?.Watched);
+        Assert.Single(entities);
+        Assert.Equal(entities.First(), result);
+    }
 }
