@@ -1,8 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using MovieListApi.Infrastructure.Database;
 using MovieListApi.Models.Entities;
+using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
+using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Infrastructure;
+using MovieListApi.Tests.Factories.ViewModels;
 
 namespace MovieListApi.Tests.Services;
 
@@ -16,6 +20,7 @@ public class MoviesManagerTest
         _dbContext = MockDbContextFactory.BuildInMemory<MoviesDbContext>();
         _manager = new MoviesManager(_dbContext);
     }
+
     [Fact]
     public async Task ShouldGetMoviesToWatch()
     {
@@ -54,5 +59,22 @@ public class MoviesManagerTest
         // Then
         Assert.Equal(movieList.Count, result.Count);
         Assert.True(result.SequenceEqual(movieList));
+    }
+
+    [Fact]
+    public async Task ShouldAddMovieToWatch()
+    {
+        // Given
+        var viewModel = new MovieViewModel().Build();
+
+        // When
+        var (success, result) = await _manager.AddMovieToWatch(viewModel);
+        var entities = await _dbContext.Movies.ToListAsync();
+
+        // Then
+        Assert.True(success);
+        Assert.True(viewModel.IsEquivalent(result));
+        Assert.Single(entities);
+        Assert.Equal(entities.First(), result);
     }
 }

@@ -14,9 +14,15 @@ public class MoviesManager : IMoviesManager
         _dbContext = dbContext;
     }
 
-    public Task<(bool success, Movie? movie)> AddMovieToWatch(MovieViewModel model)
+    public async Task<(bool success, Movie? movie)> AddMovieToWatch(MovieViewModel model)
     {
-        throw new NotImplementedException();
+        var entity = ModelToEntity(model);
+
+        await _dbContext.Movies.AddAsync(entity);
+
+        await _dbContext.SaveChangesAsync();
+
+        return (true, entity);
     }
 
     public Task<(bool success, Movie? movie)> AddWatchedMovie(MovieViewModel model)
@@ -36,5 +42,17 @@ public class MoviesManager : IMoviesManager
         var entities = await _dbContext.Movies.Where(x => x.Watched).ToListAsync();
 
         return entities;
+    }
+
+    private Movie ModelToEntity(MovieViewModel model)
+    {
+        var entity = new Movie
+        {
+            Name = model.Name,
+            ReleaseDate = model.ReleaseDate,
+            Country = model.Country,
+        };
+
+        return entity;
     }
 }
