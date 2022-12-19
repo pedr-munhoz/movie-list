@@ -24,7 +24,7 @@ public class MoviesController : ControllerBase
     }
 
     [HttpGet]
-    [Route("to-watch")]
+    [Route("watched")]
     public async Task<IActionResult> GetWatchedMovies()
     {
         var movies = await _moviesManager.GetWatchedMovies();

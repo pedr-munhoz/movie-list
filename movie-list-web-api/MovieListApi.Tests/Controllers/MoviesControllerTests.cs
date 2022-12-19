@@ -35,11 +35,11 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
-        var manager = new Mock<IMoviesManager>().MockGetMoviesToWatch(movies: movieList);
+        var manager = new Mock<IMoviesManager>().MockGetWatchedMovies(movies: movieList);
         var controller = new MoviesController(manager.Object);
 
         // When
-        var actionResult = await controller.GetMoviesToWatch();
+        var actionResult = await controller.GetWatchedMovies();
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then

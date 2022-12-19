@@ -16,4 +16,11 @@ public static class MoviesManagerFactory
 
         return service;
     }
+
+    public static Mock<IMoviesManager> MockGetWatchedMovies(this Mock<IMoviesManager> service, ICollection<Movie> movies)
+    {
+        service.Setup(x => x.GetWatchedMovies()).ReturnsAsync(movies);
+
+        return service;
+    }
 }
