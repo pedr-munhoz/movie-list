@@ -113,4 +113,63 @@ public class MoviesControllerTests
         Assert.True(successfullyParsed);
         Assert.Contains("failed", contentResult?.ToLower());
     }
+
+
+
+    [Fact]
+    public async Task ShouldAddWatchedMovie()
+    {
+        // Given
+        var viewModel = new MovieViewModel();
+        var entity = new Movie().Build();
+
+        _manager.MockAddWatchedMovie(viewModel: viewModel, entity: entity);
+
+        // When
+        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
+
+        // Then
+        Assert.True(actionResult.IsOkResult());
+        Assert.True(successfullyParsed);
+        Assert.True(entity.IsEquivalent(contentResult));
+    }
+
+    [Fact]
+    public async Task ShouldNotAddWatchedMovie()
+    {
+        // Given
+        var viewModel = new MovieViewModel();
+        var entity = new Movie().Build();
+
+        _manager.MockFailureToAddWatchedMovie(viewModel: viewModel);
+
+        // When
+        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
+
+        // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
+    }
+
+    [Fact]
+    public async Task ShouldHandleSucessButNoWatchedMovieAsFailure()
+    {
+        // Given
+        var viewModel = new MovieViewModel();
+        var entity = new Movie().Build();
+
+        _manager.MockInternalFailureToAddWatchedMovie(viewModel: viewModel);
+
+        // When
+        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
+
+        // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
+    }
 }

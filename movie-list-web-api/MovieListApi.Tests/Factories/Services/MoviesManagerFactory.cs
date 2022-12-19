@@ -48,4 +48,34 @@ public static class MoviesManagerFactory
 
         return service;
     }
+
+
+
+    public static Mock<IMoviesManager> MockAddWatchedMovie(
+        this Mock<IMoviesManager> service,
+        MovieViewModel viewModel,
+        Movie entity)
+    {
+        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((true, entity));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockFailureToAddWatchedMovie(
+        this Mock<IMoviesManager> service,
+        MovieViewModel viewModel)
+    {
+        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((false, null));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockInternalFailureToAddWatchedMovie(
+        this Mock<IMoviesManager> service,
+        MovieViewModel viewModel)
+    {
+        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((true, null));
+
+        return service;
+    }
 }

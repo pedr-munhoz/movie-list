@@ -43,4 +43,16 @@ public class MoviesController : ControllerBase
 
         return Ok(new MovieResult(movie));
     }
+
+    [HttpPost]
+    [Route("watched")]
+    public async Task<IActionResult> AddWatchedMovie([FromBody] MovieViewModel model)
+    {
+        var (sucess, movie) = await _moviesManager.AddWatchedMovie(model);
+
+        if (!sucess || movie is null)
+            return UnprocessableEntity("Failed to add watched movie");
+
+        return Ok(new MovieResult(movie));
+    }
 }
