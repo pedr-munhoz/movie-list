@@ -79,7 +79,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ShouldAddWatched()
+    public async Task ShouldAddWatchedMovie()
     {
         // Given
         var viewModel = new MovieViewModel().Build();

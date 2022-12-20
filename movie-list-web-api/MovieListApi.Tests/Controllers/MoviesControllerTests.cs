@@ -96,7 +96,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldHandleSucessButNoMovieAsFailure()
+    public async Task ShouldHandleSucessButNoMovieAsAddFailure()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -113,8 +113,6 @@ public class MoviesControllerTests
         Assert.True(successfullyParsed);
         Assert.Contains("failed", contentResult?.ToLower());
     }
-
-
 
     [Fact]
     public async Task ShouldAddWatchedMovie()
@@ -155,7 +153,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldHandleSucessButNoWatchedMovieAsFailure()
+    public async Task ShouldHandleSucessButNoWatchedMovieAsAddFailure()
     {
         // Given
         var viewModel = new MovieViewModel();
