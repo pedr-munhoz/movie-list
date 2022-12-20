@@ -188,4 +188,40 @@ public class MoviesControllerTests
         Assert.True(successfullyParsed);
         Assert.True(entity.IsEquivalent(contentResult));
     }
+
+    [Fact]
+    public async Task ShouldNotMarkMovieAsWatched()
+    {
+        // Given
+        var entity = new Movie().Build();
+
+        _manager.MockFailureToMarkMovieAsWatched(entity);
+
+        // When
+        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
+
+        // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
+    }
+
+    [Fact]
+    public async Task ShouldHandleSucessButNoWatchedMovieAsMarkFailure()
+    {
+        // Given
+        var entity = new Movie().Build();
+
+        _manager.MockInternalFailureToMarkMovieAsWatched(entity);
+
+        // When
+        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
+
+        // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
+    }
 }

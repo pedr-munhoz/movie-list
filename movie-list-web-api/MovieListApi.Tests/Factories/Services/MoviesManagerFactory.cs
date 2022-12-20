@@ -85,4 +85,22 @@ public static class MoviesManagerFactory
 
         return service;
     }
+
+    public static Mock<IMoviesManager> MockFailureToMarkMovieAsWatched(
+        this Mock<IMoviesManager> service,
+        Movie entity)
+    {
+        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((false, null));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockInternalFailureToMarkMovieAsWatched(
+        this Mock<IMoviesManager> service,
+        Movie entity)
+    {
+        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, null));
+
+        return service;
+    }
 }
