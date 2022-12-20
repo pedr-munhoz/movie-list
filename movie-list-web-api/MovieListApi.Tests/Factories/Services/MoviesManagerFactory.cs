@@ -49,8 +49,6 @@ public static class MoviesManagerFactory
         return service;
     }
 
-
-
     public static Mock<IMoviesManager> MockAddWatchedMovie(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel,
@@ -75,6 +73,15 @@ public static class MoviesManagerFactory
         MovieViewModel viewModel)
     {
         service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((true, null));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockMarkMovieAsWatched(
+        this Mock<IMoviesManager> service,
+        Movie entity)
+    {
+        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, entity));
 
         return service;
     }

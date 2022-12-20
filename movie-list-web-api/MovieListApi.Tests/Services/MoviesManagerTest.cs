@@ -95,4 +95,15 @@ public class MoviesManagerTest
         Assert.Single(entities);
         Assert.Equal(entities.First(), result);
     }
+
+    [Fact]
+    public void SholdMarkMovieAsWatched()
+    {
+        // Given
+        var movie = new Movie().Build();
+
+        // When
+
+        // Then
+    }
 }

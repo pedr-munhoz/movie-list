@@ -55,4 +55,16 @@ public class MoviesController : ControllerBase
 
         return Ok(new MovieResult(movie));
     }
+
+    [HttpPatch]
+    [Route("{id}/watched")]
+    public async Task<IActionResult> MarkMovieAsWatched([FromRoute] string id)
+    {
+        var (sucess, movie) = await _moviesManager.MarkMovieAsWatched(id);
+
+        if (!sucess || movie is null)
+            return UnprocessableEntity("Failed to mark movie as watched");
+
+        return Ok(new MovieResult(movie));
+    }
 }

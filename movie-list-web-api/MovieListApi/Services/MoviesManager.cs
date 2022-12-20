@@ -49,6 +49,11 @@ public class MoviesManager : IMoviesManager
         return entities;
     }
 
+    public Task<(bool success, Movie? movie)> MarkMovieAsWatched(string id)
+    {
+        throw new NotImplementedException();
+    }
+
     private Movie ModelToEntity(MovieViewModel model)
     {
         var entity = new Movie

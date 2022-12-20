@@ -170,4 +170,22 @@ public class MoviesControllerTests
         Assert.True(successfullyParsed);
         Assert.Contains("failed", contentResult?.ToLower());
     }
+
+    [Fact]
+    public async void SholdMarkMovieAsWatched()
+    {
+        // Given
+        var entity = new Movie().Build();
+
+        _manager.MockMarkMovieAsWatched(entity);
+
+        // When
+        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
+
+        // Then
+        Assert.True(actionResult.IsOkResult());
+        Assert.True(successfullyParsed);
+        Assert.True(entity.IsEquivalent(contentResult));
+    }
 }
