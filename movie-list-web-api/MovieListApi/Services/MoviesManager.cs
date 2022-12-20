@@ -49,9 +49,26 @@ public class MoviesManager : IMoviesManager
         return entities;
     }
 
-    public Task<(bool success, Movie? movie)> MarkMovieAsWatched(string id)
+    public async Task<(bool success, Movie? movie)> MarkMovieAsWatched(string stringId)
     {
-        throw new NotImplementedException();
+        var canParse = int.TryParse(stringId, out int id);
+
+        if (!canParse)
+            return (false, null);
+
+        var entity = await _dbContext.Movies.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        if (entity is null)
+            return (false, null);
+
+        if (entity.Watched)
+            return (false, entity);
+
+        entity.Watched = true;
+
+        await _dbContext.SaveChangesAsync();
+
+        return (true, entity);
     }
 
     private Movie ModelToEntity(MovieViewModel model)

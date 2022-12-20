@@ -97,13 +97,64 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public void SholdMarkMovieAsWatched()
+    public async Task SholdMarkMovieAsWatched()
     {
         // Given
         var movie = new Movie().Build();
+        await _dbContext.Movies.AddAsync(movie);
+        await _dbContext.SaveChangesAsync();
 
         // When
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: movie.Id.ToString());
+        await _dbContext.Entry(movie).ReloadAsync();
 
         // Then
+        Assert.True(success);
+        Assert.True(result?.Watched);
+        Assert.True(movie?.Watched);
+    }
+
+    [Fact]
+    public async Task SholdNotMarkMovieAsWatchedInvalidId()
+    {
+        // Given
+
+        // When
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: Guid.NewGuid().ToString());
+
+        // Then
+        Assert.False(success);
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task SholdNotMarkMovieAsWatchedNotFound()
+    {
+        // Given
+
+        // When
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: new Random().Next().ToString());
+
+        // Then
+        Assert.False(success);
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task SholdNotMarkMovieAsWatchedAlreadyWatched()
+    {
+        // Given
+        var movie = new Movie().Build().Watched();
+        await _dbContext.Movies.AddAsync(movie);
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: movie.Id.ToString());
+        await _dbContext.Entry(movie).ReloadAsync();
+
+        // Then
+        Assert.False(success);
+        Assert.NotNull(result);
+        Assert.Equal(movie, result);
     }
 }
