@@ -12,7 +12,7 @@ namespace MovieListApi.Tests.Services;
 
 public class MoviesManagerTest
 {
-    private readonly MoviesManager _manager;
+    private readonly IMoviesManager _manager;
     private readonly MoviesDbContext _dbContext;
 
     public MoviesManagerTest()
@@ -25,11 +25,11 @@ public class MoviesManagerTest
     public async Task ShouldGetMoviesToWatch()
     {
         // Given
-        var movieList = new List<Movie>().Build();
-        await _dbContext.Movies.AddRangeAsync(movieList);
+        var entities = new List<Movie>().Build();
+        await _dbContext.Movies.AddRangeAsync(entities);
 
-        var movie = new Movie().Build().Watched();
-        await _dbContext.Movies.AddAsync(movie);
+        var entity = new Movie().Build().Watched();
+        await _dbContext.Movies.AddAsync(entity);
 
         await _dbContext.SaveChangesAsync();
 
@@ -37,16 +37,16 @@ public class MoviesManagerTest
         var result = await _manager.GetMoviesToWatch();
 
         // Then
-        Assert.Equal(movieList.Count, result.Count);
-        Assert.True(result.SequenceEqual(movieList));
+        Assert.Equal(entities.Count, result.Count);
+        Assert.True(result.SequenceEqual(entities));
     }
 
     [Fact]
     public async Task ShouldGetWatchedMovies()
     {
         // Given
-        var movieList = new List<Movie>().Build().Watched();
-        await _dbContext.Movies.AddRangeAsync(movieList);
+        var entities = new List<Movie>().Build().Watched();
+        await _dbContext.Movies.AddRangeAsync(entities);
 
         var movie = new Movie().Build();
         await _dbContext.Movies.AddAsync(movie);
@@ -57,8 +57,8 @@ public class MoviesManagerTest
         var result = await _manager.GetWatchedMovies();
 
         // Then
-        Assert.Equal(movieList.Count, result.Count);
-        Assert.True(result.SequenceEqual(movieList));
+        Assert.Equal(entities.Count, result.Count);
+        Assert.True(result.SequenceEqual(entities));
     }
 
     [Fact]
@@ -100,18 +100,18 @@ public class MoviesManagerTest
     public async Task SholdMarkMovieAsWatched()
     {
         // Given
-        var movie = new Movie().Build();
-        await _dbContext.Movies.AddAsync(movie);
+        var entity = new Movie().Build();
+        await _dbContext.Movies.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: movie.Id.ToString());
-        await _dbContext.Entry(movie).ReloadAsync();
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: entity.Id.ToString());
+        await _dbContext.Entry(entity).ReloadAsync();
 
         // Then
         Assert.True(success);
         Assert.True(result?.Watched);
-        Assert.True(movie?.Watched);
+        Assert.True(entity?.Watched);
     }
 
     [Fact]
@@ -144,17 +144,17 @@ public class MoviesManagerTest
     public async Task SholdNotMarkMovieAsWatchedAlreadyWatched()
     {
         // Given
-        var movie = new Movie().Build().Watched();
-        await _dbContext.Movies.AddAsync(movie);
+        var entity = new Movie().Build().Watched();
+        await _dbContext.Movies.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: movie.Id.ToString());
-        await _dbContext.Entry(movie).ReloadAsync();
+        var (success, result) = await _manager.MarkMovieAsWatched(stringId: entity.Id.ToString());
+        await _dbContext.Entry(entity).ReloadAsync();
 
         // Then
         Assert.False(success);
         Assert.NotNull(result);
-        Assert.Equal(movie, result);
+        Assert.Equal(entity, result);
     }
 }
