@@ -19,7 +19,7 @@ public static class MovieGenreComparator
             entity.Name == result.Name;
     }
 
-    public static bool IsEquivalent(this MovieGenreViewModel model, Movie? entity)
+    public static bool IsEquivalent(this MovieGenreViewModel model, MovieGenre? entity)
     {
         if (entity is null)
             return false;

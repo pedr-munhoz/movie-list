@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MovieListApi.Infrastructure.Database;
 using MovieListApi.Models.Entities;
+using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
+using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Infrastructure;
+using MovieListApi.Tests.Factories.ViewModels;
 using Xunit;
 
 namespace MovieListApi.Tests.Services;
@@ -40,13 +44,19 @@ public class MovieGenresManagerTest
     }
 
     [Fact]
-    public void ShouldCreateMovieGenre()
+    public async Task ShouldCreateMovieGenre()
     {
         // Given
+        var viewModel = new MovieGenreViewModel().Build();
 
         // When
+        var (success, result) = await _manager.AddMovieGenre(viewModel);
+        var entities = await _dbContext.MovieGenres.ToListAsync();
 
         // Then
-        Assert.True(false);
+        Assert.True(success);
+        Assert.True(viewModel.IsEquivalent(result));
+        Assert.Single(entities);
+        Assert.Equal(entities.First(), result);
     }
 }
