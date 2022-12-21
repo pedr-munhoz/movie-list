@@ -9,14 +9,14 @@ namespace MovieListApi.Controllers
     {
         [HttpPost]
         [Route("")]
-        public Task<IActionResult> CreateMovieGenre([FromBody] MovieGenreViewModel model)
+        public Task<IActionResult> Create([FromBody] MovieGenreViewModel model)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
         [Route("")]
-        public Task<IActionResult> ListMovieGenre()
+        public Task<IActionResult> List()
         {
             throw new NotImplementedException();
         }

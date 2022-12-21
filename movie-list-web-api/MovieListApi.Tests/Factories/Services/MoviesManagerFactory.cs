@@ -9,14 +9,14 @@ public static class MoviesManagerFactory
 {
     public static Mock<IMoviesManager> MockGetMoviesToWatch(this Mock<IMoviesManager> service, ICollection<Movie> movies)
     {
-        service.Setup(x => x.GetMoviesToWatch()).ReturnsAsync(movies);
+        service.Setup(x => x.CreateMoviesToWatch()).ReturnsAsync(movies);
 
         return service;
     }
 
     public static Mock<IMoviesManager> MockGetWatchedMovies(this Mock<IMoviesManager> service, ICollection<Movie> movies)
     {
-        service.Setup(x => x.GetWatchedMovies()).ReturnsAsync(movies);
+        service.Setup(x => x.ListWatchedMovies()).ReturnsAsync(movies);
 
         return service;
     }
@@ -26,7 +26,7 @@ public static class MoviesManagerFactory
         MovieViewModel viewModel,
         Movie entity)
     {
-        service.Setup(x => x.AddMovieToWatch(viewModel)).ReturnsAsync((true, entity));
+        service.Setup(x => x.CreateMovieToWatch(viewModel)).ReturnsAsync((true, entity));
 
         return service;
     }
@@ -35,7 +35,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
-        service.Setup(x => x.AddMovieToWatch(viewModel)).ReturnsAsync((false, null));
+        service.Setup(x => x.CreateMovieToWatch(viewModel)).ReturnsAsync((false, null));
 
         return service;
     }
@@ -44,7 +44,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
-        service.Setup(x => x.AddMovieToWatch(viewModel)).ReturnsAsync((true, null));
+        service.Setup(x => x.CreateMovieToWatch(viewModel)).ReturnsAsync((true, null));
 
         return service;
     }
@@ -54,7 +54,7 @@ public static class MoviesManagerFactory
         MovieViewModel viewModel,
         Movie entity)
     {
-        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((true, entity));
+        service.Setup(x => x.CreateWatchedMovie(viewModel)).ReturnsAsync((true, entity));
 
         return service;
     }
@@ -63,7 +63,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
-        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((false, null));
+        service.Setup(x => x.CreateWatchedMovie(viewModel)).ReturnsAsync((false, null));
 
         return service;
     }
@@ -72,7 +72,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
-        service.Setup(x => x.AddWatchedMovie(viewModel)).ReturnsAsync((true, null));
+        service.Setup(x => x.CreateWatchedMovie(viewModel)).ReturnsAsync((true, null));
 
         return service;
     }
@@ -81,7 +81,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, entity));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, entity));
 
         return service;
     }
@@ -90,7 +90,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((false, null));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((false, null));
 
         return service;
     }
@@ -99,7 +99,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.MarkMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, null));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, null));
 
         return service;
     }

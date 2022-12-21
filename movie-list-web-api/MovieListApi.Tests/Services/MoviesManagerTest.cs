@@ -34,7 +34,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var result = await _manager.GetMoviesToWatch();
+        var result = await _manager.CreateMoviesToWatch();
 
         // Then
         Assert.Equal(entities.Count, result.Count);
@@ -54,7 +54,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var result = await _manager.GetWatchedMovies();
+        var result = await _manager.ListWatchedMovies();
 
         // Then
         Assert.Equal(entities.Count, result.Count);
@@ -68,7 +68,7 @@ public class MoviesManagerTest
         var viewModel = new MovieViewModel().Build();
 
         // When
-        var (success, result) = await _manager.AddMovieToWatch(viewModel);
+        var (success, result) = await _manager.CreateMovieToWatch(viewModel);
         var entities = await _dbContext.Movies.ToListAsync();
 
         // Then
@@ -85,7 +85,7 @@ public class MoviesManagerTest
         var viewModel = new MovieViewModel().Build();
 
         // When
-        var (success, result) = await _manager.AddWatchedMovie(viewModel);
+        var (success, result) = await _manager.CreateWatchedMovie(viewModel);
         var entities = await _dbContext.Movies.ToListAsync();
 
         // Then
@@ -105,7 +105,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: entity.Id.ToString());
+        var (success, result) = await _manager.SetMovieAsWatched(stringId: entity.Id.ToString());
         await _dbContext.Entry(entity).ReloadAsync();
 
         // Then
@@ -120,7 +120,7 @@ public class MoviesManagerTest
         // Given
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: Guid.NewGuid().ToString());
+        var (success, result) = await _manager.SetMovieAsWatched(stringId: Guid.NewGuid().ToString());
 
         // Then
         Assert.False(success);
@@ -133,7 +133,7 @@ public class MoviesManagerTest
         // Given
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: new Random().Next().ToString());
+        var (success, result) = await _manager.SetMovieAsWatched(stringId: new Random().Next().ToString());
 
         // Then
         Assert.False(success);
@@ -149,7 +149,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var (success, result) = await _manager.MarkMovieAsWatched(stringId: entity.Id.ToString());
+        var (success, result) = await _manager.SetMovieAsWatched(stringId: entity.Id.ToString());
         await _dbContext.Entry(entity).ReloadAsync();
 
         // Then

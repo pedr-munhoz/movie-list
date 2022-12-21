@@ -5,9 +5,9 @@ namespace MovieListApi.Services;
 
 public interface IMoviesManager
 {
-    Task<ICollection<Movie>> GetMoviesToWatch();
-    Task<ICollection<Movie>> GetWatchedMovies();
-    Task<(bool success, Movie? entity)> AddMovieToWatch(MovieViewModel model);
-    Task<(bool success, Movie? entity)> AddWatchedMovie(MovieViewModel model);
-    Task<(bool success, Movie? entity)> MarkMovieAsWatched(string stringId);
+    Task<ICollection<Movie>> CreateMoviesToWatch();
+    Task<ICollection<Movie>> ListWatchedMovies();
+    Task<(bool success, Movie? entity)> CreateMovieToWatch(MovieViewModel model);
+    Task<(bool success, Movie? entity)> CreateWatchedMovie(MovieViewModel model);
+    Task<(bool success, Movie? entity)> SetMovieAsWatched(string stringId);
 }

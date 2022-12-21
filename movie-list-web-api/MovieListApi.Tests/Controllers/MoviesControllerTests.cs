@@ -29,7 +29,7 @@ public class MoviesControllerTests
         _manager.MockGetMoviesToWatch(movies: movieList);
 
         // When
-        var actionResult = await _controller.GetMoviesToWatch();
+        var actionResult = await _controller.ListMoviesToWatch();
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -47,7 +47,7 @@ public class MoviesControllerTests
         _manager.MockGetWatchedMovies(movies: movieList);
 
         // When
-        var actionResult = await _controller.GetWatchedMovies();
+        var actionResult = await _controller.ListWatchedMovies();
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -67,7 +67,7 @@ public class MoviesControllerTests
         _manager.MockAddMovieToWatch(viewModel: viewModel, entity: entity);
 
         // When
-        var actionResult = await _controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.CreateMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
@@ -86,7 +86,7 @@ public class MoviesControllerTests
         _manager.MockFailureToAddMovieToWatch(viewModel: viewModel);
 
         // When
-        var actionResult = await _controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.CreateMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -105,7 +105,7 @@ public class MoviesControllerTests
         _manager.MockInternalFailureToAddMovieToWatch(viewModel: viewModel);
 
         // When
-        var actionResult = await _controller.AddMovieToWatch(viewModel);
+        var actionResult = await _controller.CreateMovieToWatch(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -124,7 +124,7 @@ public class MoviesControllerTests
         _manager.MockAddWatchedMovie(viewModel: viewModel, entity: entity);
 
         // When
-        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var actionResult = await _controller.CreateWatchedMovie(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
@@ -143,7 +143,7 @@ public class MoviesControllerTests
         _manager.MockFailureToAddWatchedMovie(viewModel: viewModel);
 
         // When
-        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var actionResult = await _controller.CreateWatchedMovie(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -162,7 +162,7 @@ public class MoviesControllerTests
         _manager.MockInternalFailureToAddWatchedMovie(viewModel: viewModel);
 
         // When
-        var actionResult = await _controller.AddWatchedMovie(viewModel);
+        var actionResult = await _controller.CreateWatchedMovie(viewModel);
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -180,7 +180,7 @@ public class MoviesControllerTests
         _manager.MockMarkMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
         var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
@@ -198,7 +198,7 @@ public class MoviesControllerTests
         _manager.MockFailureToMarkMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -216,7 +216,7 @@ public class MoviesControllerTests
         _manager.MockInternalFailureToMarkMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.MarkMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then

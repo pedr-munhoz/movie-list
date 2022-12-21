@@ -18,25 +18,25 @@ public class MoviesController : ControllerBase
 
     [HttpGet]
     [Route("to-watch")]
-    public async Task<IActionResult> GetMoviesToWatch()
+    public async Task<IActionResult> ListMoviesToWatch()
     {
-        var movies = await _moviesManager.GetMoviesToWatch();
+        var movies = await _moviesManager.CreateMoviesToWatch();
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 
     [HttpGet]
     [Route("watched")]
-    public async Task<IActionResult> GetWatchedMovies()
+    public async Task<IActionResult> ListWatchedMovies()
     {
-        var movies = await _moviesManager.GetWatchedMovies();
+        var movies = await _moviesManager.ListWatchedMovies();
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 
     [HttpPost]
     [Route("to-watch")]
-    public async Task<IActionResult> AddMovieToWatch([FromBody] MovieViewModel model)
+    public async Task<IActionResult> CreateMovieToWatch([FromBody] MovieViewModel model)
     {
-        var (sucess, movie) = await _moviesManager.AddMovieToWatch(model);
+        var (sucess, movie) = await _moviesManager.CreateMovieToWatch(model);
 
         if (!sucess || movie is null)
             return UnprocessableEntity("Failed to add movie to watch");
@@ -46,9 +46,9 @@ public class MoviesController : ControllerBase
 
     [HttpPost]
     [Route("watched")]
-    public async Task<IActionResult> AddWatchedMovie([FromBody] MovieViewModel model)
+    public async Task<IActionResult> CreateWatchedMovie([FromBody] MovieViewModel model)
     {
-        var (sucess, movie) = await _moviesManager.AddWatchedMovie(model);
+        var (sucess, movie) = await _moviesManager.CreateWatchedMovie(model);
 
         if (!sucess || movie is null)
             return UnprocessableEntity("Failed to add watched movie");
@@ -58,9 +58,9 @@ public class MoviesController : ControllerBase
 
     [HttpPatch]
     [Route("{id}/watched")]
-    public async Task<IActionResult> MarkMovieAsWatched([FromRoute] string id)
+    public async Task<IActionResult> SetMovieAsWatched([FromRoute] string id)
     {
-        var (sucess, movie) = await _moviesManager.MarkMovieAsWatched(id);
+        var (sucess, movie) = await _moviesManager.SetMovieAsWatched(id);
 
         if (!sucess || movie is null)
             return UnprocessableEntity("Failed to mark movie as watched");
