@@ -14,7 +14,7 @@ public class MoviesManager : IMoviesManager
         _dbContext = dbContext;
     }
 
-    public async Task<(bool success, Movie? movie)> AddMovieToWatch(MovieViewModel model)
+    public async Task<(bool success, Movie? entity)> AddMovieToWatch(MovieViewModel model)
     {
         var entity = ModelToEntity(model);
 
@@ -24,7 +24,7 @@ public class MoviesManager : IMoviesManager
         return (true, entity);
     }
 
-    public async Task<(bool success, Movie? movie)> AddWatchedMovie(MovieViewModel model)
+    public async Task<(bool success, Movie? entity)> AddWatchedMovie(MovieViewModel model)
     {
         var entity = ModelToEntity(model);
         entity.Watched = true;
@@ -49,7 +49,7 @@ public class MoviesManager : IMoviesManager
         return entities;
     }
 
-    public async Task<(bool success, Movie? movie)> MarkMovieAsWatched(string stringId)
+    public async Task<(bool success, Movie? entity)> MarkMovieAsWatched(string stringId)
     {
         var canParse = int.TryParse(stringId, out int id);
 
