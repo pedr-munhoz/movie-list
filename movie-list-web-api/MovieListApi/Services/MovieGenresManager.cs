@@ -18,7 +18,7 @@ public class MovieGenresManager : IMovieGenresManager
         _dbContext = dbContext;
     }
 
-    public async Task<(bool success, MovieGenre? entity)> AddMovieGenre(MovieGenreViewModel model)
+    public async Task<(bool success, MovieGenre? entity)> CreateMovieGenre(MovieGenreViewModel model)
     {
         var entity = ModelToEntity(model);
 
@@ -27,7 +27,7 @@ public class MovieGenresManager : IMovieGenresManager
 
         return (true, entity);
     }
-    public async Task<ICollection<MovieGenre>> GetMovieGenres()
+    public async Task<ICollection<MovieGenre>> ListMovieGenres()
     {
         var entities = await _dbContext.MovieGenres.ToListAsync();
 
