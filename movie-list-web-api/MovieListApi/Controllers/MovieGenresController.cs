@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MovieListApi.Models.Results;
 using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
 
@@ -8,22 +9,31 @@ namespace MovieListApi.Controllers
     [Route("api/[controller]")]
     public class MovieGenresController : ControllerBase
     {
+        private readonly IMovieGenresManager _manager;
+
         public MovieGenresController(IMovieGenresManager manager)
         {
+            _manager = manager;
         }
 
         [HttpPost]
         [Route("")]
-        public Task<IActionResult> Create([FromBody] MovieGenreViewModel model)
+        public async Task<IActionResult> Create([FromBody] MovieGenreViewModel model)
         {
-            throw new NotImplementedException();
+            var (sucess, entity) = await _manager.Create(model);
+
+            if (!sucess || entity is null)
+                return UnprocessableEntity("Failed to create movie genre");
+
+            return Ok(new MovieGenreResult(entity));
         }
 
         [HttpGet]
         [Route("")]
-        public Task<IActionResult> List()
+        public async Task<IActionResult> List()
         {
-            throw new NotImplementedException();
+            var entities = await _manager.List();
+            return Ok(entities.Select(x => new MovieGenreResult(x)).ToList());
         }
     }
 }

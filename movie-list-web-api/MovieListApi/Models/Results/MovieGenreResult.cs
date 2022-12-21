@@ -15,4 +15,13 @@ public class MovieGenreResult
 
     public string Id { get; set; }
     public string Name { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is MovieGenreResult result &&
+               Id == result.Id &&
+               Name == result.Name;
+    }
+
+    public override int GetHashCode() => base.GetHashCode();
 }
