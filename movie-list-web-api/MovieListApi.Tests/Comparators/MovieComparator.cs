@@ -16,6 +16,7 @@ public static class MovieComparator
             entity.ReleaseDate == result.ReleaseDate &&
             entity.Country == result.Country;
     }
+
     public static bool IsEquivalent(this MovieViewModel model, Movie? entity)
     {
         if (entity is null)

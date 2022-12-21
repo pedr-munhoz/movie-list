@@ -1,3 +1,8 @@
+using MovieListApi.Models.Entities;
+using MovieListApi.Models.Results;
+using MovieListApi.Tests.Comparators;
+using MovieListApi.Tests.Factories.Entities;
+
 namespace MovieListApi.Tests.Models.Results;
 
 public class MovieGenreResultTest
@@ -5,12 +10,20 @@ public class MovieGenreResultTest
     [Fact]
     public void ShouldInstantiate()
     {
-        Assert.True(false);
+        // Given
+        var entity = new MovieGenre().Build();
+
+        // When
+        var result = new MovieGenreResult(entity);
+
+        // Then
+        Assert.True(entity.IsEquivalent(result));
     }
 
-    [Fact]
-    public void ShouldThrowException()
+    [Theory]
+    [InlineData(null)]
+    public void ShouldThrowException(MovieGenre entity)
     {
-        Assert.True(false);
+        Assert.Throws<ArgumentNullException>(() => new MovieGenreResult(entity));
     }
 }

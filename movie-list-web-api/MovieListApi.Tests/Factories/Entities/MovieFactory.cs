@@ -5,6 +5,7 @@ namespace MovieListApi.Tests.Factories.Entities;
 public static class MovieFactory
 {
     private static Random _random = new Random();
+
     public static Movie Build(this Movie entity)
     {
         if (entity is null)
