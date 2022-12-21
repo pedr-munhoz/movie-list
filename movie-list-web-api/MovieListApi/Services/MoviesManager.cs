@@ -35,7 +35,7 @@ public class MoviesManager : IMoviesManager
         return (true, entity);
     }
 
-    public async Task<ICollection<Movie>> CreateMoviesToWatch()
+    public async Task<ICollection<Movie>> ListMoviesToWatch()
     {
         var entities = await _dbContext.Movies.Where(x => !x.Watched).ToListAsync();
 

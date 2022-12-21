@@ -36,7 +36,7 @@ public class MovieGenresManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var result = await _manager.ListMovieGenres();
+        var result = await _manager.List();
 
         // Then
         Assert.Equal(entities.Count, result.Count);
@@ -50,7 +50,7 @@ public class MovieGenresManagerTest
         var viewModel = new MovieGenreViewModel().Build();
 
         // When
-        var (success, result) = await _manager.CreateMovieGenre(viewModel);
+        var (success, result) = await _manager.Create(viewModel);
         var entities = await _dbContext.MovieGenres.ToListAsync();
 
         // Then

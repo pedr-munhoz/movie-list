@@ -20,7 +20,7 @@ public class MoviesController : ControllerBase
     [Route("to-watch")]
     public async Task<IActionResult> ListMoviesToWatch()
     {
-        var movies = await _moviesManager.CreateMoviesToWatch();
+        var movies = await _moviesManager.ListMoviesToWatch();
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 

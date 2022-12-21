@@ -5,6 +5,6 @@ namespace MovieListApi.Services;
 
 public interface IMovieGenresManager
 {
-    Task<ICollection<MovieGenre>> ListMovieGenres();
-    Task<(bool success, MovieGenre? entity)> CreateMovieGenre(MovieGenreViewModel model);
+    Task<ICollection<MovieGenre>> List();
+    Task<(bool success, MovieGenre? entity)> Create(MovieGenreViewModel model);
 }

@@ -26,7 +26,7 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build();
-        _manager.MockGetMoviesToWatch(movies: movieList);
+        _manager.MockListMoviesToWatch(movies: movieList);
 
         // When
         var actionResult = await _controller.ListMoviesToWatch();
@@ -44,7 +44,7 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
-        _manager.MockGetWatchedMovies(movies: movieList);
+        _manager.MockListWatchedMovies(movies: movieList);
 
         // When
         var actionResult = await _controller.ListWatchedMovies();
@@ -64,7 +64,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockAddMovieToWatch(viewModel: viewModel, entity: entity);
+        _manager.MockCreateMovieToWatch(viewModel: viewModel, entity: entity);
 
         // When
         var actionResult = await _controller.CreateMovieToWatch(viewModel);
@@ -83,7 +83,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockFailureToAddMovieToWatch(viewModel: viewModel);
+        _manager.MockFailureToCreateMovieToWatch(viewModel: viewModel);
 
         // When
         var actionResult = await _controller.CreateMovieToWatch(viewModel);
@@ -102,7 +102,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockInternalFailureToAddMovieToWatch(viewModel: viewModel);
+        _manager.MockInternalFailureToCreateMovieToWatch(viewModel: viewModel);
 
         // When
         var actionResult = await _controller.CreateMovieToWatch(viewModel);
@@ -121,7 +121,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockAddWatchedMovie(viewModel: viewModel, entity: entity);
+        _manager.MockCreateWatchedMovie(viewModel: viewModel, entity: entity);
 
         // When
         var actionResult = await _controller.CreateWatchedMovie(viewModel);
@@ -140,7 +140,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockFailureToAddWatchedMovie(viewModel: viewModel);
+        _manager.MockFailureToCreateWatchedMovie(viewModel: viewModel);
 
         // When
         var actionResult = await _controller.CreateWatchedMovie(viewModel);
@@ -159,7 +159,7 @@ public class MoviesControllerTests
         var viewModel = new MovieViewModel();
         var entity = new Movie().Build();
 
-        _manager.MockInternalFailureToAddWatchedMovie(viewModel: viewModel);
+        _manager.MockInternalFailureToCreateWatchedMovie(viewModel: viewModel);
 
         // When
         var actionResult = await _controller.CreateWatchedMovie(viewModel);
@@ -177,7 +177,7 @@ public class MoviesControllerTests
         // Given
         var entity = new Movie().Build();
 
-        _manager.MockMarkMovieAsWatched(entity);
+        _manager.MockSetMovieAsWatched(entity);
 
         // When
         var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
@@ -195,7 +195,7 @@ public class MoviesControllerTests
         // Given
         var entity = new Movie().Build();
 
-        _manager.MockFailureToMarkMovieAsWatched(entity);
+        _manager.MockFailureSetMovieAsWatched(entity);
 
         // When
         var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
@@ -213,7 +213,7 @@ public class MoviesControllerTests
         // Given
         var entity = new Movie().Build();
 
-        _manager.MockInternalFailureToMarkMovieAsWatched(entity);
+        _manager.MockInternalFailureToSetMovieAsWatched(entity);
 
         // When
         var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());

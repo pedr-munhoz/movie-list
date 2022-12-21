@@ -34,7 +34,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var result = await _manager.CreateMoviesToWatch();
+        var result = await _manager.ListMoviesToWatch();
 
         // Then
         Assert.Equal(entities.Count, result.Count);

@@ -7,21 +7,21 @@ namespace MovieListApi.Tests.Factories.Services;
 
 public static class MoviesManagerFactory
 {
-    public static Mock<IMoviesManager> MockGetMoviesToWatch(this Mock<IMoviesManager> service, ICollection<Movie> movies)
+    public static Mock<IMoviesManager> MockListMoviesToWatch(this Mock<IMoviesManager> service, ICollection<Movie> movies)
     {
-        service.Setup(x => x.CreateMoviesToWatch()).ReturnsAsync(movies);
+        service.Setup(x => x.ListMoviesToWatch()).ReturnsAsync(movies);
 
         return service;
     }
 
-    public static Mock<IMoviesManager> MockGetWatchedMovies(this Mock<IMoviesManager> service, ICollection<Movie> movies)
+    public static Mock<IMoviesManager> MockListWatchedMovies(this Mock<IMoviesManager> service, ICollection<Movie> movies)
     {
         service.Setup(x => x.ListWatchedMovies()).ReturnsAsync(movies);
 
         return service;
     }
 
-    public static Mock<IMoviesManager> MockAddMovieToWatch(
+    public static Mock<IMoviesManager> MockCreateMovieToWatch(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel,
         Movie entity)
@@ -31,7 +31,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockFailureToAddMovieToWatch(
+    public static Mock<IMoviesManager> MockFailureToCreateMovieToWatch(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
@@ -40,7 +40,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockInternalFailureToAddMovieToWatch(
+    public static Mock<IMoviesManager> MockInternalFailureToCreateMovieToWatch(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
@@ -49,7 +49,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockAddWatchedMovie(
+    public static Mock<IMoviesManager> MockCreateWatchedMovie(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel,
         Movie entity)
@@ -59,7 +59,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockFailureToAddWatchedMovie(
+    public static Mock<IMoviesManager> MockFailureToCreateWatchedMovie(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
@@ -68,7 +68,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockInternalFailureToAddWatchedMovie(
+    public static Mock<IMoviesManager> MockInternalFailureToCreateWatchedMovie(
         this Mock<IMoviesManager> service,
         MovieViewModel viewModel)
     {
@@ -77,7 +77,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockMarkMovieAsWatched(
+    public static Mock<IMoviesManager> MockSetMovieAsWatched(
         this Mock<IMoviesManager> service,
         Movie entity)
     {
@@ -86,7 +86,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockFailureToMarkMovieAsWatched(
+    public static Mock<IMoviesManager> MockFailureSetMovieAsWatched(
         this Mock<IMoviesManager> service,
         Movie entity)
     {
@@ -95,7 +95,7 @@ public static class MoviesManagerFactory
         return service;
     }
 
-    public static Mock<IMoviesManager> MockInternalFailureToMarkMovieAsWatched(
+    public static Mock<IMoviesManager> MockInternalFailureToSetMovieAsWatched(
         this Mock<IMoviesManager> service,
         Movie entity)
     {
