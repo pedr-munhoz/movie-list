@@ -20,11 +20,10 @@ public class MovieResultTests
         Assert.True(entity.IsEquivalent(result));
     }
 
-    [Fact]
-    public void ShouldThrowException()
+    [Theory]
+    [InlineData(null)]
+    public void ShouldThrowException(Movie entity)
     {
-#pragma warning disable CS8625
-        Assert.Throws<ArgumentNullException>(() => new MovieResult(entity: null));
-#pragma warning restore CS8625
+        Assert.Throws<ArgumentNullException>(() => new MovieResult(entity));
     }
 }
