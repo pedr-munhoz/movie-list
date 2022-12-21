@@ -20,4 +20,14 @@ public static class MovieGenreFactory
 
         return entity;
     }
+
+    public static List<MovieGenre> Build(this List<MovieGenre> entities)
+    {
+        var count = _random.Next(50);
+
+        for (int i = 0; i < count; i++)
+            entities.Add(new MovieGenre().Build());
+
+        return entities;
+    }
 }
