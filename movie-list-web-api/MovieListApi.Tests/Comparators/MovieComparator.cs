@@ -12,7 +12,7 @@ public static class MovieComparator
             return false;
 
         return entity.Id.ToString() == result.Id &&
-            entity.Name == result.Name &&
+            entity.Title == result.Title &&
             entity.ReleaseDate == result.ReleaseDate &&
             entity.Country == result.Country;
     }
@@ -22,7 +22,7 @@ public static class MovieComparator
         if (entity is null)
             return false;
 
-        return model.Name == entity.Name &&
+        return model.Title == entity.Title &&
             model.ReleaseDate == entity.ReleaseDate &&
             model.Country == entity.Country;
     }

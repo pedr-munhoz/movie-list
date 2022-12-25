@@ -8,7 +8,7 @@ namespace MovieListApi.Tests.Models.Results;
 public class MovieResultTests
 {
     [Fact]
-    public void Constructor_WhenCalledWithValidEntity_SetsPropertiesCorrectly()
+    public void Initialize_WhenCalledWithValidEntity_SetsPropertiesCorrectly()
     {
         // Given
         var entity = new Movie().Build();
@@ -21,7 +21,7 @@ public class MovieResultTests
     }
 
     [Fact]
-    public void Constructor_WhenCalledWithNullEntity_ThrowsArgumentNullException()
+    public void Initialize_WhenCalledWithNullEntity_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new MovieResult(null!));
     }

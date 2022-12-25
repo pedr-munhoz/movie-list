@@ -11,29 +11,30 @@ namespace MovieListApi.Tests.Models.ViewModels;
 public class MovieGenreViewModelTest
 {
     [Fact]
-    public void ShouldAcceptMovieViewModel()
+    public void Validation_WhenModelIsValid_ReturnsNoErrors()
     {
         // Given
         var viewModel = new MovieGenreViewModel { Name = "Some Genre" };
 
         // When
-        var errors = TestModelHelper.Validate(viewModel);
+        var (isValid, errors) = TestModelHelper.Validate(viewModel);
 
         // Then
+        Assert.True(isValid);
         Assert.Empty(errors);
     }
 
-    [Theory]
-    [InlineData(null)]
-    public void ShouldNotAcceptMovieViewModelNoName(string name)
+    [Fact]
+    public void Validation_WhenNameIsNull_ReturnsRequiredError()
     {
         // Given
-        var viewModel = new MovieGenreViewModel { Name = name };
+        var viewModel = new MovieGenreViewModel { Name = null! };
 
         // When
-        var errors = TestModelHelper.Validate(viewModel);
+        var (isValid, errors) = TestModelHelper.Validate(viewModel);
 
         // Then
+        Assert.False(isValid);
         Assert.NotEmpty(errors);
         Assert.True(errors.Any(x =>
             x.ErrorMessage is not null &&

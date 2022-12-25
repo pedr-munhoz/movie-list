@@ -10,13 +10,13 @@ public class MovieResult
             throw new ArgumentNullException(nameof(entity));
 
         Id = entity.Id.ToString();
-        Name = entity.Name;
+        Title = entity.Title;
         ReleaseDate = entity.ReleaseDate;
         Country = entity.Country;
     }
 
     public string Id { get; set; } = null!;
-    public string Name { get; set; } = null!;
+    public string Title { get; set; } = null!;
     public DateTime? ReleaseDate { get; set; }
     public string? Country { get; set; }
 
@@ -24,7 +24,7 @@ public class MovieResult
     {
         return obj is MovieResult result &&
                Id == result.Id &&
-               Name == result.Name &&
+               Title == result.Title &&
                ReleaseDate == result.ReleaseDate &&
                Country == result.Country;
     }

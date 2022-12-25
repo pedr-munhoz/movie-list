@@ -75,7 +75,7 @@ public class MoviesManager : IMoviesManager
     {
         var entity = new Movie
         {
-            Name = model.Name,
+            Title = model.Title,
             ReleaseDate = model.ReleaseDate,
             Country = model.Country,
         };

@@ -5,51 +5,45 @@ namespace MovieListApi.Tests.Models.ViewModels;
 
 public class MovieViewModelTest
 {
-    [Theory]
-    [InlineData("Some Movie", null, null)]
-    [InlineData("Some Movie", null, "A Country")]
-    [InlineData("Some Movie", "2017-3-1", null)]
-    [InlineData("Some Movie", "2017-3-1", "A Country")]
-    public void ShouldAcceptMovieViewModel(string name, string? realeaseDate, string? country)
+    [Fact]
+    public void Validation_WhenModelIsValid_ReturnsNoErrors()
     {
         // Given
         var viewModel = new MovieViewModel
         {
-            Name = name,
-            ReleaseDate = realeaseDate.ToDateTime(),
-            Country = country,
+            Title = "Some Movie",
+            ReleaseDate = DateTime.Now,
+            Country = "A Country",
         };
 
         // When
-        var errors = TestModelHelper.Validate(viewModel);
+        var (isValid, errors) = TestModelHelper.Validate(viewModel);
 
         // Then
+        Assert.True(isValid);
         Assert.Empty(errors);
     }
 
-    [Theory]
-    [InlineData(null, null, null)]
-    [InlineData(null, null, "A Country")]
-    [InlineData(null, "2017-3-1", null)]
-    [InlineData(null, "2017-3-1", "A Country")]
-    public void ShouldNotAcceptMovieViewModelNoName(string name, string? realeaseDate, string? country)
+    [Fact]
+    public void Validation_WhenTitleIsNull_ReturnsRequiredError()
     {
         // Given
         var viewModel = new MovieViewModel
         {
-            Name = name,
-            ReleaseDate = realeaseDate.ToDateTime(),
-            Country = country,
+            Title = null!,
+            ReleaseDate = DateTime.Now,
+            Country = "A Country",
         };
 
         // When
-        var errors = TestModelHelper.Validate(viewModel);
+        var (isValid, errors) = TestModelHelper.Validate(viewModel);
 
         // Then
+        Assert.False(isValid);
         Assert.NotEmpty(errors);
         Assert.True(errors.Any(x =>
             x.ErrorMessage is not null &&
-            x.ErrorMessage.ToLower().Contains("name") &&
+            x.ErrorMessage.ToLower().Contains("title") &&
             x.ErrorMessage.ToLower().Contains("required"))
         );
     }
