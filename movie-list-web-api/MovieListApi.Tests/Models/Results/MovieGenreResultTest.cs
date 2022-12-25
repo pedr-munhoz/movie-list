@@ -8,7 +8,7 @@ namespace MovieListApi.Tests.Models.Results;
 public class MovieGenreResultTest
 {
     [Fact]
-    public void ShouldInstantiate()
+    public void Constructor_WhenCalledWithValidEntity_SetsPropertiesCorrectly()
     {
         // Given
         var entity = new MovieGenre().Build();
@@ -21,7 +21,7 @@ public class MovieGenreResultTest
     }
 
     [Fact]
-    public void ShouldThrowException()
+    public void Constructor_WhenCalledWithNullEntity_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>(() => new MovieGenreResult(null!));
     }

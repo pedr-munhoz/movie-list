@@ -22,7 +22,7 @@ public class MovieGenresControllerTest
     }
 
     [Fact]
-    public async Task List_When_Called_Expect_ListOfMovieGenres()
+    public async Task List_WhenCalled_ReturnsListOfMovieGenres()
     {
         // Given
         var entities = new List<MovieGenre>().Build();
@@ -40,7 +40,7 @@ public class MovieGenresControllerTest
     }
 
     [Fact]
-    public async Task Create_When_OperationSucedes_Expect_CreatedMovieGenre()
+    public async Task Create_WhenOperationSucedes_ReturnsCreatedMovieGenre()
     {
         // Given
         var viewModel = new MovieGenreViewModel();
@@ -59,7 +59,7 @@ public class MovieGenresControllerTest
     }
 
     [Fact]
-    public async Task Create_When_OperationFails_Expect_ErrorMessage()
+    public async Task Create_WhenOperationFails_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieGenreViewModel();
@@ -78,7 +78,7 @@ public class MovieGenresControllerTest
     }
 
     [Fact]
-    public async Task Create_When_OperationReturnsNoMovieGenre_Expect_ErrorMessage()
+    public async Task Create_WhenOperationReturnsNoMovieGenre_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieGenreViewModel();

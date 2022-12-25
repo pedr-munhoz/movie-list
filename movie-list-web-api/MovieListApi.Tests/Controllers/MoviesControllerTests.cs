@@ -22,7 +22,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ListMoviesToWatch_When_Called_Expect_ListOfMoviesToWatch()
+    public async Task ListMoviesToWatch_WhenCalled_ReturnsListOfMoviesToWatch()
     {
         // Given
         var movieList = new List<Movie>().Build();
@@ -40,7 +40,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ListWatchedMovies_When_Called_Expect_ListOfWatchedMovies()
+    public async Task ListWatchedMovies_WhenCalled_ReturnsListOfWatchedMovies()
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
@@ -58,7 +58,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateMovieToWatch_When_OperationSucedes_Expect_CreatedMovie()
+    public async Task CreateMovieToWatch_WhenOperationSucedes_ReturnsCreatedMovie()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -77,7 +77,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateMovieToWatch_When_OperationFails_Expect_ErrorMessage()
+    public async Task CreateMovieToWatch_WhenOperationFails_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -96,7 +96,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateMovieToWatch_When_OperationReturnsNoMovie_Expect_ErrorMessage()
+    public async Task CreateMovieToWatch_WhenOperationReturnsNoMovie_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -115,7 +115,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateWatchedMovie_When_OperationSucedes_Expect_CreatedMovie()
+    public async Task CreateWatchedMovie_WhenOperationSucedes_ReturnsCreatedMovie()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -134,7 +134,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateWatchedMovie_When_OperationFails_Expect_ErrorMessage()
+    public async Task CreateWatchedMovie_WhenOperationFails_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -153,7 +153,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task CreateWatchedMovie_When_OperationReturnsNoMovie_Expect_ErrorMessage()
+    public async Task CreateWatchedMovie_WhenOperationReturnsNoMovie_ReturnsErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -172,7 +172,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async void SetMovieAsWatched_When_OperationSucedes_Expect_Movie()
+    public async void SetMovieAsWatched_WhenOperationSucedes_ReturnsMovie()
     {
         // Given
         var entity = new Movie().Build();
@@ -190,7 +190,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task SetMovieAsWatched_When_OperationFails_Expect_ErrorMessage()
+    public async Task SetMovieAsWatched_WhenOperationFails_ReturnsErrorMessage()
     {
         // Given
         var entity = new Movie().Build();
@@ -208,7 +208,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task SetMovieAsWatched_When_OperationReturnsNoMovie_Expect_ErrorMessage()
+    public async Task SetMovieAsWatched_WhenOperationReturnsNoMovie_ReturnsErrorMessage()
     {
         // Given
         var entity = new Movie().Build();
