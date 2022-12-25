@@ -1,3 +1,4 @@
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 
 namespace MovieListApi.Models.Results;
@@ -9,7 +10,7 @@ public class MovieResult
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
 
-        Id = entity.Id.ToString();
+        Id = entity.Id.ToStringId();
         Title = entity.Title;
         ReleaseDate = entity.ReleaseDate;
         Country = entity.Country;

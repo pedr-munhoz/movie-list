@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieListApi.Infrastructure.Database;
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.ViewModels;
 
@@ -51,9 +52,9 @@ public class MoviesManager : IMoviesManager
 
     public async Task<(bool success, Movie? entity)> SetMovieAsWatched(string stringId)
     {
-        var canParse = int.TryParse(stringId, out int id);
+        var id = stringId.ToIntId();
 
-        if (!canParse)
+        if (id is null)
             return (false, null);
 
         var entity = await _dbContext.Movies.Where(x => x.Id == id).FirstOrDefaultAsync();
