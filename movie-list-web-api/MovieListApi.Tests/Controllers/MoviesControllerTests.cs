@@ -22,7 +22,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldListMoviesToWatch()
+    public async Task When_RequestsMoviesToWatch_Expect_ListOfMoviesToWatch()
     {
         // Given
         var movieList = new List<Movie>().Build();
@@ -40,7 +40,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldListWatchedMovies()
+    public async Task When_RequestsWatchedMovies_Expect_ListOfWatchedMovies()
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
@@ -58,7 +58,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldAddMovieToWatch()
+    public async Task When_MovieToWatchCreationSucedes_Expect_CreatedMovie()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -77,7 +77,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldNotAddMovieToWatch()
+    public async Task When_MovietoWatchCreationFails_Expect_ErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -96,7 +96,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldHandleSucessButNoMovieAsAddFailure()
+    public async Task When_MovieToWatchCreationReturnsNoMovie_Expect_ErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -115,7 +115,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldAddWatchedMovie()
+    public async Task When_WatchedMovieCreationSucedes_Expect_CreatedMovie()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -134,7 +134,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldNotAddWatchedMovie()
+    public async Task When_WatchedMovieCreationFails_Expect_ErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -153,7 +153,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldHandleSucessButNoWatchedMovieAsAddFailure()
+    public async Task When_WatchedMovieCreationReturnsNoMovie_Expect_ErrorMessage()
     {
         // Given
         var viewModel = new MovieViewModel();
@@ -172,7 +172,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async void SholdMarkMovieAsWatched()
+    public async void When_SetMovieAsWatchedSucedes_Expect_Movie()
     {
         // Given
         var entity = new Movie().Build();
@@ -190,7 +190,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldNotMarkMovieAsWatched()
+    public async Task When_SetMovieAsWatchedFails_Expect_ErrorMessage()
     {
         // Given
         var entity = new Movie().Build();
@@ -208,7 +208,7 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public async Task ShouldHandleSucessButNoWatchedMovieAsMarkFailure()
+    public async Task When_SetMovieAsWatchedReturnsNoMovie_Expect_ErrorMessage()
     {
         // Given
         var entity = new Movie().Build();
