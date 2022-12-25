@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Moq;
 using MovieListApi.Controllers;
 using MovieListApi.Models.Entities;
@@ -11,7 +7,6 @@ using MovieListApi.Services;
 using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Services;
-using Xunit;
 
 namespace MovieListApi.Tests.Controllers;
 
