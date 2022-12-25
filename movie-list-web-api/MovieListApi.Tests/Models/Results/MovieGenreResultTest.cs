@@ -20,10 +20,9 @@ public class MovieGenreResultTest
         Assert.True(entity.IsEquivalent(result));
     }
 
-    [Theory]
-    [InlineData(null)]
-    public void ShouldThrowException(MovieGenre entity)
+    [Fact]
+    public void ShouldThrowException()
     {
-        Assert.Throws<ArgumentNullException>(() => new MovieGenreResult(entity));
+        Assert.Throws<ArgumentNullException>(() => new MovieGenreResult(null!));
     }
 }
