@@ -22,7 +22,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ShouldGetMoviesToWatch()
+    public async Task ListMoviesToWatch_WhenCalled_ReturnsMoviesToWatchFromDb()
     {
         // Given
         var entities = new List<Movie>().Build();
@@ -42,7 +42,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ShouldGetWatchedMovies()
+    public async Task ListWatchedMovies_WhenCalled_ReturnsWatchedMoviesFromDb()
     {
         // Given
         var entities = new List<Movie>().Build().Watched();
@@ -62,7 +62,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ShouldAddMovieToWatch()
+    public async Task CreateMovieToWatch_WhenCalled_AddsMovieToDbAndReturnsIt()
     {
         // Given
         var viewModel = new MovieViewModel().Build();
@@ -79,7 +79,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ShouldAddWatchedMovie()
+    public async Task CreateWatchedMovie_WhenCalled_AddsMovieToDbAndReturnsIt()
     {
         // Given
         var viewModel = new MovieViewModel().Build();
@@ -97,7 +97,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task SholdMarkMovieAsWatched()
+    public async Task SetMovieAsWatched_WhenCalledWithExistingMovieToWatchId_SetsMovieAsWatchedAndReturnsIt()
     {
         // Given
         var entity = new Movie().Build();
@@ -115,7 +115,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task SholdNotMarkMovieAsWatchedInvalidId()
+    public async Task SetMovieAsWatched_WhenCalledWithInvalidId_ReturnsFailure()
     {
         // Given
 
@@ -128,7 +128,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task SholdNotMarkMovieAsWatchedNotFound()
+    public async Task SetMovieAsWatched_WhenCalledWithUnknownId_ReturnsFailure()
     {
         // Given
 
@@ -141,7 +141,7 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task SholdNotMarkMovieAsWatchedAlreadyWatched()
+    public async Task SetMovieAsWatched_WhenCalledWithExistingWatchedMovieId_ReturnsFailureWithMovie()
     {
         // Given
         var entity = new Movie().Build().Watched();
