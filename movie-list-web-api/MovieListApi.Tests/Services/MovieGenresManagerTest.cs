@@ -27,7 +27,7 @@ public class MovieGenresManagerTest
     }
 
     [Fact]
-    public async Task ShouldListMovieGenres()
+    public async Task List_WhenCalled_ReturnsListMovieOfGenres()
     {
         // Given
         var entities = new List<MovieGenre>().Build();
@@ -44,7 +44,7 @@ public class MovieGenresManagerTest
     }
 
     [Fact]
-    public async Task ShouldCreateMovieGenre()
+    public async Task Create_WhenCalled_AddsMovieGenreToDbAndReturnsIt()
     {
         // Given
         var viewModel = new MovieGenreViewModel().Build();
