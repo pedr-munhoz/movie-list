@@ -15,6 +15,38 @@ public class MoviesManager : IMoviesManager
         _dbContext = dbContext;
     }
 
+    public async Task<(bool success, Movie? entity)> AddGenre(string movieStringId, string genreStringId)
+    {
+        var id = movieStringId.ToIntId();
+
+        if (id is null)
+            return (false, null);
+
+        var movie = await _dbContext.Movies.Include(x => x.Genres).Where(x => x.Id == id).FirstOrDefaultAsync();
+
+        if (movie is null)
+            return (false, null);
+
+        var genreId = genreStringId.ToIntId();
+
+        if (genreId is null)
+            return (false, movie);
+
+        var genre = await _dbContext.MovieGenres.Where(x => x.Id == genreId).FirstOrDefaultAsync();
+
+        if (genre is null)
+            return (false, movie);
+
+        if (movie.Genres.Contains(genre))
+            return (false, movie);
+
+        movie.Genres.Add(genre);
+
+        await _dbContext.SaveChangesAsync();
+
+        return (true, movie);
+    }
+
     public async Task<(bool success, Movie? entity)> CreateMovieToWatch(MovieViewModel model)
     {
         var entity = ModelToEntity(model);

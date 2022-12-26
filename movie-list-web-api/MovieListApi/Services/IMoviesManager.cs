@@ -10,4 +10,5 @@ public interface IMoviesManager
     Task<(bool success, Movie? entity)> CreateMovieToWatch(MovieViewModel model);
     Task<(bool success, Movie? entity)> CreateWatchedMovie(MovieViewModel model);
     Task<(bool success, Movie? entity)> SetMovieAsWatched(string stringId);
+    Task<(bool success, Movie? entity)> AddGenre(string movieStringId, string genreStringId);
 }

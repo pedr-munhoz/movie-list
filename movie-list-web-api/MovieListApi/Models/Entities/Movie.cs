@@ -7,4 +7,5 @@ public class Movie
     public DateTime? ReleaseDate { get; set; }
     public string? Country { get; set; }
     public bool Watched { get; set; }
+    public ICollection<MovieGenre> Genres { get; set; } = null!;
 }

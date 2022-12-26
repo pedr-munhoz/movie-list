@@ -15,6 +15,7 @@ public static class MovieFactory
         entity.Title = Guid.NewGuid().ToString();
         entity.ReleaseDate = DateTime.Now;
         entity.Country = Guid.NewGuid().ToString();
+        entity.Genres = new List<MovieGenre>();
 
         return entity;
     }
@@ -22,6 +23,13 @@ public static class MovieFactory
     public static Movie Watched(this Movie entity)
     {
         entity.Watched = true;
+
+        return entity;
+    }
+
+    public static Movie WithGenre(this Movie entity, MovieGenre genre)
+    {
+        entity.Genres.Add(genre);
 
         return entity;
     }

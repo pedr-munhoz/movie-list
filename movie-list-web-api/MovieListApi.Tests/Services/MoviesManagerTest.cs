@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MovieListApi.Infrastructure.Database;
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
@@ -156,5 +157,127 @@ public class MoviesManagerTest
         Assert.False(success);
         Assert.NotNull(result);
         Assert.Equal(entity, result);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithExistingIdAndExistingGenreId_SetRelationAndReturnMovie()
+    {
+        // Given
+        var movie = new Movie().Build();
+        await _dbContext.Movies.AddAsync(movie);
+
+        var genre = new MovieGenre().Build();
+        await _dbContext.MovieGenres.AddAsync(genre);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: movie.Id.ToStringId(), genreStringId: genre.Id.ToStringId());
+        await _dbContext.Entry(movie).ReloadAsync();
+
+        // Then
+        Assert.True(success);
+        Assert.NotNull(result);
+        Assert.Equal(movie, result);
+        Assert.NotEmpty(movie.Genres);
+        Assert.Contains(genre, movie.Genres);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithInvalidId_ReturnFailure()
+    {
+        // Given
+        var genre = new MovieGenre().Build();
+        await _dbContext.MovieGenres.AddAsync(genre);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: "eou15", genreStringId: genre.Id.ToStringId());
+
+        // Then
+        Assert.False(success);
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithUnknownId_ReturnFailure()
+    {
+        // Given
+        var genre = new MovieGenre().Build();
+        await _dbContext.MovieGenres.AddAsync(genre);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: "12545", genreStringId: genre.Id.ToStringId());
+
+        // Then
+        Assert.False(success);
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithInvalidGenreId_ReturnFailureWithMovie()
+    {
+        // Given
+        var movie = new Movie().Build();
+        await _dbContext.Movies.AddAsync(movie);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: movie.Id.ToStringId(), genreStringId: "5o4eu5");
+        await _dbContext.Entry(movie).ReloadAsync();
+
+        // Then
+        Assert.False(success);
+        Assert.NotNull(result);
+        Assert.Equal(movie, result);
+        Assert.Empty(movie.Genres);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithUnknownGenreId_ReturnFailureWithMovie()
+    {
+        // Given
+        var movie = new Movie().Build();
+        await _dbContext.Movies.AddAsync(movie);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: movie.Id.ToStringId(), genreStringId: "1548");
+        await _dbContext.Entry(movie).ReloadAsync();
+
+        // Then
+        Assert.False(success);
+        Assert.NotNull(result);
+        Assert.Equal(movie, result);
+        Assert.Empty(movie.Genres);
+    }
+
+    [Fact]
+    public async Task AddGenre_WhenCalledWithAlreadyContainedGenreId_ReturnFailureWithMovie()
+    {
+        // Given
+        var genre = new MovieGenre().Build();
+        await _dbContext.MovieGenres.AddAsync(genre);
+
+        var movie = new Movie().Build().WithGenre(genre);
+        await _dbContext.Movies.AddAsync(movie);
+
+        await _dbContext.SaveChangesAsync();
+
+        // When
+        var (success, result) = await _manager.AddGenre(movieStringId: movie.Id.ToStringId(), genreStringId: genre.Id.ToStringId());
+        await _dbContext.Entry(movie).ReloadAsync();
+
+        // Then
+        Assert.False(success);
+        Assert.NotNull(result);
+        Assert.Equal(movie, result);
+        Assert.NotEmpty(movie.Genres);
+        Assert.Contains(genre, movie.Genres);
     }
 }

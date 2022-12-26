@@ -224,4 +224,37 @@ public class MoviesControllerTests
         Assert.True(successfullyParsed);
         Assert.Contains("failed", contentResult?.ToLower());
     }
+
+    [Fact]
+    public void AddGenre_WhenOperationSucedes_ReturnMovie()
+    {
+        // Given
+
+        // When
+        throw new NotImplementedException();
+
+        // Then
+    }
+
+    [Fact]
+    public void AddGenre_WhenOperationFails_ReturnErrorMessage()
+    {
+        // Given
+
+        // When
+        throw new NotImplementedException();
+
+        // Then
+    }
+
+    [Fact]
+    public void AddGenre_WhenOperationReturnsNoMovie_ReturnErrorMessage()
+    {
+        // Given
+
+        // When
+        throw new NotImplementedException();
+
+        // Then
+    }
 }
