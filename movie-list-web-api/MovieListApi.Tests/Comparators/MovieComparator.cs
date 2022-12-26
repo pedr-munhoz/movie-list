@@ -1,3 +1,4 @@
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
 using MovieListApi.Models.ViewModels;
@@ -11,7 +12,7 @@ public static class MovieComparator
         if (result is null)
             return false;
 
-        return entity.Id.ToString() == result.Id &&
+        return entity.Id.ToStringId() == result.Id &&
             entity.Title == result.Title &&
             entity.ReleaseDate == result.ReleaseDate &&
             entity.Country == result.Country;

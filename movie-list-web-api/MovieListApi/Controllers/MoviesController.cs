@@ -67,4 +67,16 @@ public class MoviesController : ControllerBase
 
         return Ok(new MovieResult(movie));
     }
+
+    [HttpPost]
+    [Route("{id}/genre/{genreId}")]
+    public async Task<IActionResult> AddGenreToMovie([FromRoute] string id, string genreId)
+    {
+        var (sucess, movie) = await _moviesManager.AddGenre(movieStringId: id, genreStringId: genreId);
+
+        if (!sucess || movie is null)
+            return UnprocessableEntity("Failed to add genre to the movie");
+
+        return Ok(new MovieResult(movie));
+    }
 }

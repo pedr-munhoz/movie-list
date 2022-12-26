@@ -106,7 +106,7 @@ public class MoviesManagerTest
         await _dbContext.SaveChangesAsync();
 
         // When
-        var (success, result) = await _manager.SetMovieAsWatched(stringId: entity.Id.ToString());
+        var (success, result) = await _manager.SetMovieAsWatched(stringId: entity.Id.ToStringId());
         await _dbContext.Entry(entity).ReloadAsync();
 
         // Then

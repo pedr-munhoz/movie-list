@@ -1,5 +1,6 @@
 using Moq;
 using MovieListApi.Controllers;
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
 using MovieListApi.Models.ViewModels;
@@ -180,7 +181,7 @@ public class MoviesControllerTests
         _manager.MockSetMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToStringId());
         var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
@@ -198,7 +199,7 @@ public class MoviesControllerTests
         _manager.MockFailureSetMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToStringId());
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -216,7 +217,7 @@ public class MoviesControllerTests
         _manager.MockInternalFailureToSetMovieAsWatched(entity);
 
         // When
-        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToString());
+        var actionResult = await _controller.SetMovieAsWatched(id: entity.Id.ToStringId());
         var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
@@ -226,14 +227,22 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public void AddGenre_WhenOperationSucedes_ReturnMovie()
+    public async Task AddGenre_WhenOperationSucedes_ReturnMovie()
     {
         // Given
+        var genre = new MovieGenre().Build();
+        var movie = new Movie().Build().WithGenre(genre);
+
+        _manager.MockAddGenre(movie, genre);
 
         // When
-        throw new NotImplementedException();
+        var actionResult = await _controller.AddGenreToMovie(id: movie.Id.ToStringId(), genreId: genre.Id.ToStringId());
+        var (successfullyParsed, contentResult) = actionResult.Parse<MovieResult>();
 
         // Then
+        Assert.True(actionResult.IsOkResult());
+        Assert.True(successfullyParsed);
+        Assert.True(movie.IsEquivalent(contentResult));
     }
 
     [Fact]

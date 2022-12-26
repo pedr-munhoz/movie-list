@@ -1,4 +1,5 @@
 using Moq;
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.ViewModels;
 using MovieListApi.Services;
@@ -81,7 +82,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, entity));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToStringId())).ReturnsAsync((true, entity));
 
         return service;
     }
@@ -90,7 +91,7 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((false, null));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToStringId())).ReturnsAsync((false, null));
 
         return service;
     }
@@ -99,7 +100,19 @@ public static class MoviesManagerFactory
         this Mock<IMoviesManager> service,
         Movie entity)
     {
-        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToString())).ReturnsAsync((true, null));
+        service.Setup(x => x.SetMovieAsWatched(entity.Id.ToStringId())).ReturnsAsync((true, null));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockAddGenre(
+        this Mock<IMoviesManager> service,
+        Movie movie,
+        MovieGenre genre)
+    {
+        service
+            .Setup(x => x.AddGenre(movie.Id.ToStringId(), genre.Id.ToStringId()))
+            .ReturnsAsync((true, movie));
 
         return service;
     }

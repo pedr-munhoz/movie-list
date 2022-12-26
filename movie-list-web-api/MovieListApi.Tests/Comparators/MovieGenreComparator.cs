@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MovieListApi.Infrastructure.Extensions;
 using MovieListApi.Models.Entities;
 using MovieListApi.Models.Results;
 using MovieListApi.Models.ViewModels;
@@ -15,7 +12,7 @@ public static class MovieGenreComparator
         if (result is null)
             return false;
 
-        return entity.Id.ToString() == result.Id &&
+        return entity.Id.ToStringId() == result.Id &&
             entity.Name == result.Name;
     }
 
