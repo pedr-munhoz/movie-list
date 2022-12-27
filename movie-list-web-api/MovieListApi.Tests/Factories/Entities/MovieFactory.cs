@@ -33,9 +33,9 @@ public static class MovieFactory
         return entity;
     }
 
-    public static List<Movie> Build(this List<Movie> entities)
+    public static List<Movie> Build(this List<Movie> entities, int? count = null)
     {
-        var count = _random.Next(50);
+        count = count ?? _random.Next(50);
 
         for (int i = 0; i < count; i++)
             entities.Add(new Movie().Build());

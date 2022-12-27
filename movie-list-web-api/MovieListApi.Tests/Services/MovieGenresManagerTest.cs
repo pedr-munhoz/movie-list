@@ -29,7 +29,7 @@ public class MovieGenresManagerTest
     [Theory]
     [InlineData(0, 11)]
     [InlineData(3, 7)]
-    public async Task List_WhenCalledWithOffset_ReturnsCorrecly(int index, int length)
+    public async Task List_WhenCalledWithOffset_ReturnsCorrectItemCount(int index, int length)
     {
         // Given
         var skipped = new List<MovieGenre>().Build(count: index);
