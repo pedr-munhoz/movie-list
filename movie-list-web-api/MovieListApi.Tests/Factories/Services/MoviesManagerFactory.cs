@@ -116,4 +116,28 @@ public static class MoviesManagerFactory
 
         return service;
     }
+
+    public static Mock<IMoviesManager> MockFailureAddGenre(
+        this Mock<IMoviesManager> service,
+        string movieId,
+        string genreId)
+    {
+        service
+            .Setup(x => x.AddGenre(movieId, genreId))
+            .ReturnsAsync((false, null));
+
+        return service;
+    }
+
+    public static Mock<IMoviesManager> MockAddGenreNoMovieReturn(
+        this Mock<IMoviesManager> service,
+        string movieId,
+        string genreId)
+    {
+        service
+            .Setup(x => x.AddGenre(movieId, genreId))
+            .ReturnsAsync((true, null));
+
+        return service;
+    }
 }

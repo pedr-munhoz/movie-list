@@ -8,6 +8,7 @@ using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Infrastructure;
 using MovieListApi.Tests.Factories.ViewModels;
+using MovieListApi.Tests.Infrastructure.Database;
 
 namespace MovieListApi.Tests.Services;
 
@@ -173,7 +174,7 @@ public class MoviesManagerTest
 
         // When
         var (success, result) = await _manager.AddGenre(movieStringId: movie.Id.ToStringId(), genreStringId: genre.Id.ToStringId());
-        await _dbContext.Entry(movie).ReloadAsync();
+        await _dbContext.ReloadAllEntities();
 
         // Then
         Assert.True(success);

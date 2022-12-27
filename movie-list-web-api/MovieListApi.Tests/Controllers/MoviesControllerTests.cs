@@ -246,24 +246,40 @@ public class MoviesControllerTests
     }
 
     [Fact]
-    public void AddGenre_WhenOperationFails_ReturnErrorMessage()
+    public async Task AddGenre_WhenOperationFails_ReturnErrorMessage()
     {
         // Given
+        var movieId = Guid.NewGuid().ToString();
+        var genreId = Guid.NewGuid().ToString();
+
+        _manager.MockFailureAddGenre(movieId: movieId, genreId: genreId);
 
         // When
-        throw new NotImplementedException();
+        var actionResult = await _controller.AddGenreToMovie(id: movieId, genreId: genreId);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
     }
 
     [Fact]
-    public void AddGenre_WhenOperationReturnsNoMovie_ReturnErrorMessage()
+    public async Task AddGenre_WhenOperationReturnsNoMovie_ReturnErrorMessage()
     {
         // Given
+        var movieId = Guid.NewGuid().ToString();
+        var genreId = Guid.NewGuid().ToString();
+
+        _manager.MockAddGenreNoMovieReturn(movieId: movieId, genreId: genreId);
 
         // When
-        throw new NotImplementedException();
+        var actionResult = await _controller.AddGenreToMovie(id: movieId, genreId: genreId);
+        var (successfullyParsed, contentResult) = actionResult.Parse<string>();
 
         // Then
+        Assert.True(actionResult.IsUnprocessableEntityResult());
+        Assert.True(successfullyParsed);
+        Assert.Contains("failed", contentResult?.ToLower());
     }
 }
