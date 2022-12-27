@@ -27,9 +27,9 @@ public class MovieGenresManagerTest
     }
 
     [Theory]
-    [InlineData(0, 10)]
+    [InlineData(0, 11)]
     [InlineData(3, 7)]
-    public async Task List_WhenCalled_ReturnsListOfMovieGenres(int index, int length)
+    public async Task List_WhenCalledWithOffset_ReturnsCorrecly(int index, int length)
     {
         // Given
         var skipped = new List<MovieGenre>().Build(count: index);
@@ -43,6 +43,30 @@ public class MovieGenresManagerTest
         await _dbContext.SaveChangesAsync();
 
         var offset = new OffsetViewModel { Index = index, Length = length };
+
+        // When
+        var result = await _manager.List(offset);
+
+        // Then
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
+    }
+
+    [Fact]
+    public async Task List_WhenCalledWithoutOffset_ReturnsBaseLength()
+    {
+        // Given
+        var length = MovieGenresManager.BaseLength;
+
+        var selected = new List<MovieGenre>().Build(count: length);
+        var leftover = new List<MovieGenre>().Build();
+
+        await _dbContext.MovieGenres.AddRangeAsync(selected);
+        await _dbContext.MovieGenres.AddRangeAsync(leftover);
+
+        await _dbContext.SaveChangesAsync();
+
+        var offset = new OffsetViewModel { Index = null, Length = null };
 
         // When
         var result = await _manager.List(offset);
