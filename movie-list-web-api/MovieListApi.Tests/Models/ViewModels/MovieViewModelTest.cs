@@ -1,5 +1,4 @@
 using MovieListApi.Models.ViewModels;
-using MovieListApi.Tests.Utils;
 
 namespace MovieListApi.Tests.Models.ViewModels;
 
@@ -41,10 +40,10 @@ public class MovieViewModelTest
         // Then
         Assert.False(isValid);
         Assert.NotEmpty(errors);
-        Assert.True(errors.Any(x =>
+        Assert.Contains(errors, x =>
             x.ErrorMessage is not null &&
             x.ErrorMessage.ToLower().Contains("title") &&
-            x.ErrorMessage.ToLower().Contains("required"))
+            x.ErrorMessage.ToLower().Contains("required")
         );
     }
 }

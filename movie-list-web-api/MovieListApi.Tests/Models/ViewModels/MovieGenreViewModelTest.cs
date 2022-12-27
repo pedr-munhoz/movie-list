@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MovieListApi.Models.ViewModels;
-using MovieListApi.Tests.Utils;
-using Xunit;
 
 namespace MovieListApi.Tests.Models.ViewModels;
 
@@ -36,10 +30,10 @@ public class MovieGenreViewModelTest
         // Then
         Assert.False(isValid);
         Assert.NotEmpty(errors);
-        Assert.True(errors.Any(x =>
+        Assert.Contains(errors, x =>
             x.ErrorMessage is not null &&
             x.ErrorMessage.ToLower().Contains("name") &&
-            x.ErrorMessage.ToLower().Contains("required"))
+            x.ErrorMessage.ToLower().Contains("required")
         );
     }
 }
