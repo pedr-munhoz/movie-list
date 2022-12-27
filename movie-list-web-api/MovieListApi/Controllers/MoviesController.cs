@@ -18,17 +18,17 @@ public class MoviesController : ControllerBase
 
     [HttpGet]
     [Route("to-watch")]
-    public async Task<IActionResult> ListMoviesToWatch()
+    public async Task<IActionResult> ListMoviesToWatch([FromQuery] OffsetViewModel offset)
     {
-        var movies = await _moviesManager.ListMoviesToWatch();
+        var movies = await _moviesManager.ListMoviesToWatch(offset);
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 
     [HttpGet]
     [Route("watched")]
-    public async Task<IActionResult> ListWatchedMovies()
+    public async Task<IActionResult> ListWatchedMovies([FromQuery] OffsetViewModel offset)
     {
-        var movies = await _moviesManager.ListWatchedMovies();
+        var movies = await _moviesManager.ListWatchedMovies(offset);
         return Ok(movies.Select(x => new MovieResult(x)).ToList());
     }
 

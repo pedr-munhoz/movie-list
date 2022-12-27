@@ -8,16 +8,22 @@ namespace MovieListApi.Tests.Factories.Services;
 
 public static class MoviesManagerFactory
 {
-    public static Mock<IMoviesManager> MockListMoviesToWatch(this Mock<IMoviesManager> service, ICollection<Movie> movies)
+    public static Mock<IMoviesManager> MockListMoviesToWatch(
+        this Mock<IMoviesManager> service,
+        ICollection<Movie> movies,
+        OffsetViewModel offset)
     {
-        service.Setup(x => x.ListMoviesToWatch()).ReturnsAsync(movies);
+        service.Setup(x => x.ListMoviesToWatch(offset)).ReturnsAsync(movies);
 
         return service;
     }
 
-    public static Mock<IMoviesManager> MockListWatchedMovies(this Mock<IMoviesManager> service, ICollection<Movie> movies)
+    public static Mock<IMoviesManager> MockListWatchedMovies(
+        this Mock<IMoviesManager> service,
+        ICollection<Movie> movies,
+        OffsetViewModel offset)
     {
-        service.Setup(x => x.ListWatchedMovies()).ReturnsAsync(movies);
+        service.Setup(x => x.ListWatchedMovies(offset)).ReturnsAsync(movies);
 
         return service;
     }

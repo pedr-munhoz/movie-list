@@ -24,10 +24,10 @@ public class MoviesManagerTest
     }
 
     [Fact]
-    public async Task ListMoviesToWatch_WhenCalled_ReturnsMoviesToWatchFromDb()
+    public async Task ListMoviesToWatch_WhenCalled_ReturnsOnlyMoviesToWatch()
     {
         // Given
-        var entities = new List<Movie>().Build();
+        var entities = new List<Movie>().Build(count: 10);
         await _dbContext.Movies.AddRangeAsync(entities);
 
         var entity = new Movie().Build().Watched();
@@ -35,19 +35,71 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
+        var offset = new OffsetViewModel { Index = 0, Length = 20 };
+
         // When
-        var result = await _manager.ListMoviesToWatch();
+        var result = await _manager.ListMoviesToWatch(offset);
 
         // Then
         Assert.Equal(entities.Count, result.Count);
         Assert.True(result.SequenceEqual(entities));
     }
 
-    [Fact]
-    public async Task ListWatchedMovies_WhenCalled_ReturnsWatchedMoviesFromDb()
+    [Theory]
+    [InlineData(0, 11)]
+    [InlineData(3, 7)]
+    public async Task ListMoviesToWatch_WhenCalledWithOffset_ReturnsCorrectItemCount(int index, int length)
     {
         // Given
-        var entities = new List<Movie>().Build().Watched();
+        var skipped = new List<Movie>().Build(count: index);
+        var selected = new List<Movie>().Build(count: length);
+        var leftover = new List<Movie>().Build();
+
+        await _dbContext.Movies.AddRangeAsync(skipped);
+        await _dbContext.Movies.AddRangeAsync(selected);
+        await _dbContext.Movies.AddRangeAsync(leftover);
+
+        await _dbContext.SaveChangesAsync();
+
+        var offset = new OffsetViewModel { Index = index, Length = length };
+
+        // When
+        var result = await _manager.ListMoviesToWatch(offset);
+
+        // Then
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
+    }
+
+    [Fact]
+    public async Task ListMoviesToWatch_WhenCalledWithoutOffset_ReturnsBaseItemCount()
+    {
+        // Given
+        var length = MoviesManager.BaseLength;
+
+        var selected = new List<Movie>().Build(count: length);
+        var leftover = new List<Movie>().Build();
+
+        await _dbContext.Movies.AddRangeAsync(selected);
+        await _dbContext.Movies.AddRangeAsync(leftover);
+
+        await _dbContext.SaveChangesAsync();
+
+        var offset = new OffsetViewModel { Index = null, Length = null };
+
+        // When
+        var result = await _manager.ListMoviesToWatch(offset);
+
+        // Then
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
+    }
+
+    [Fact]
+    public async Task ListWatchedMovies_WhenCalled_ReturnsOnlyWatchedMovies()
+    {
+        // Given
+        var entities = new List<Movie>().Build(count: 10).Watched();
         await _dbContext.Movies.AddRangeAsync(entities);
 
         var movie = new Movie().Build();
@@ -55,12 +107,64 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
+        var offset = new OffsetViewModel { Index = 0, Length = 20 };
+
         // When
-        var result = await _manager.ListWatchedMovies();
+        var result = await _manager.ListWatchedMovies(offset);
 
         // Then
         Assert.Equal(entities.Count, result.Count);
         Assert.True(result.SequenceEqual(entities));
+    }
+
+    [Theory]
+    [InlineData(0, 11)]
+    [InlineData(3, 7)]
+    public async Task ListWatchedMovies_WhenCalledWithOffset_ReturnsCorrectItemCount(int index, int length)
+    {
+        // Given
+        var skipped = new List<Movie>().Build(count: index).Watched();
+        var selected = new List<Movie>().Build(count: length).Watched();
+        var leftover = new List<Movie>().Build().Watched();
+
+        await _dbContext.Movies.AddRangeAsync(skipped);
+        await _dbContext.Movies.AddRangeAsync(selected);
+        await _dbContext.Movies.AddRangeAsync(leftover);
+
+        await _dbContext.SaveChangesAsync();
+
+        var offset = new OffsetViewModel { Index = index, Length = length };
+
+        // When
+        var result = await _manager.ListWatchedMovies(offset);
+
+        // Then
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
+    }
+
+    [Fact]
+    public async Task ListWatchedMovies_WhenCalledWithoutOffset_ReturnsBaseItemCount()
+    {
+        // Given
+        var length = MoviesManager.BaseLength;
+
+        var selected = new List<Movie>().Build(count: length).Watched();
+        var leftover = new List<Movie>().Build().Watched();
+
+        await _dbContext.Movies.AddRangeAsync(selected);
+        await _dbContext.Movies.AddRangeAsync(leftover);
+
+        await _dbContext.SaveChangesAsync();
+
+        var offset = new OffsetViewModel { Index = null, Length = null };
+
+        // When
+        var result = await _manager.ListWatchedMovies(offset);
+
+        // Then
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
     }
 
     [Fact]

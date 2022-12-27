@@ -8,6 +8,7 @@ using MovieListApi.Services;
 using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Services;
+using MovieListApi.Tests.Factories.ViewModels;
 
 namespace MovieListApi.Tests.Controllers;
 
@@ -27,10 +28,12 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build();
-        _manager.MockListMoviesToWatch(movies: movieList);
+        var offset = new OffsetViewModel().Build();
+
+        _manager.MockListMoviesToWatch(movies: movieList, offset: offset);
 
         // When
-        var actionResult = await _controller.ListMoviesToWatch();
+        var actionResult = await _controller.ListMoviesToWatch(offset);
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -45,10 +48,12 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
-        _manager.MockListWatchedMovies(movies: movieList);
+        var offset = new OffsetViewModel().Build();
+
+        _manager.MockListWatchedMovies(movies: movieList, offset: offset);
 
         // When
-        var actionResult = await _controller.ListWatchedMovies();
+        var actionResult = await _controller.ListWatchedMovies(offset);
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then

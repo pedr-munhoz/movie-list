@@ -8,6 +8,8 @@ namespace MovieListApi.Services;
 
 public class MoviesManager : IMoviesManager
 {
+    public const int BaseLength = 30;
+
     private readonly MoviesDbContext _dbContext;
 
     public MoviesManager(MoviesDbContext dbContext)
@@ -68,16 +70,32 @@ public class MoviesManager : IMoviesManager
         return (true, entity);
     }
 
-    public async Task<ICollection<Movie>> ListMoviesToWatch()
+    public async Task<ICollection<Movie>> ListMoviesToWatch(OffsetViewModel offset)
     {
-        var entities = await _dbContext.Movies.Where(x => !x.Watched).ToListAsync();
+        var index = offset.Index ?? 0;
+        var length = offset.Length ?? BaseLength;
+
+        var entities = await _dbContext.Movies
+            .Where(x => !x.Watched)
+            .OrderBy(x => x.Id)
+            .Skip(index)
+            .Take(length)
+            .ToListAsync();
 
         return entities;
     }
 
-    public async Task<ICollection<Movie>> ListWatchedMovies()
+    public async Task<ICollection<Movie>> ListWatchedMovies(OffsetViewModel offset)
     {
-        var entities = await _dbContext.Movies.Where(x => x.Watched).ToListAsync();
+        var index = offset.Index ?? 0;
+        var length = offset.Length ?? BaseLength;
+
+        var entities = await _dbContext.Movies
+            .Where(x => x.Watched)
+            .OrderBy(x => x.Id)
+            .Skip(index)
+            .Take(length)
+            .ToListAsync();
 
         return entities;
     }
