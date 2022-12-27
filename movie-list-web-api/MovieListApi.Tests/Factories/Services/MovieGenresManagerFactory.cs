@@ -11,9 +11,12 @@ namespace MovieListApi.Tests.Factories.Services;
 
 public static class MovieGenresManagerFactory
 {
-    public static Mock<IMovieGenresManager> MockList(this Mock<IMovieGenresManager> service, ICollection<MovieGenre> entities)
+    public static Mock<IMovieGenresManager> MockList(
+        this Mock<IMovieGenresManager> service,
+        ICollection<MovieGenre> entities,
+        OffsetViewModel offset)
     {
-        service.Setup(x => x.List()).ReturnsAsync(entities);
+        service.Setup(x => x.List(offset)).ReturnsAsync(entities);
 
         return service;
     }

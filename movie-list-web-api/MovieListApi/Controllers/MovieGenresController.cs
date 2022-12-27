@@ -30,9 +30,9 @@ namespace MovieListApi.Controllers
 
         [HttpGet]
         [Route("")]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List([FromRoute] OffsetViewModel offset)
         {
-            var entities = await _manager.List();
+            var entities = await _manager.List(offset);
             return Ok(entities.Select(x => new MovieGenreResult(x)).ToList());
         }
     }

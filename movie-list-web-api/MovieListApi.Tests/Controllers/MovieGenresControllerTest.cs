@@ -7,6 +7,7 @@ using MovieListApi.Services;
 using MovieListApi.Tests.Comparators;
 using MovieListApi.Tests.Factories.Entities;
 using MovieListApi.Tests.Factories.Services;
+using MovieListApi.Tests.Factories.ViewModels;
 
 namespace MovieListApi.Tests.Controllers;
 
@@ -26,10 +27,11 @@ public class MovieGenresControllerTest
     {
         // Given
         var entities = new List<MovieGenre>().Build();
-        _manager.MockList(entities: entities);
+        var offset = new OffsetViewModel().Build();
+        _manager.MockList(entities: entities, offset: offset);
 
         // When
-        var actionResult = await _controller.List();
+        var actionResult = await _controller.List(offset);
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieGenreResult>>();
 
         // Then

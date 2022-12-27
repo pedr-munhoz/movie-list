@@ -15,15 +15,14 @@ public static class MovieGenreFactory
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
 
-        entity.Id = _random.Next();
         entity.Name = Guid.NewGuid().ToString();
 
         return entity;
     }
 
-    public static List<MovieGenre> Build(this List<MovieGenre> entities)
+    public static List<MovieGenre> Build(this List<MovieGenre> entities, int? count = null)
     {
-        var count = _random.Next(50);
+        count = count ?? _random.Next(50);
 
         for (int i = 0; i < count; i++)
             entities.Add(new MovieGenre().Build());

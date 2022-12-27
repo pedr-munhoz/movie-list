@@ -5,6 +5,6 @@ namespace MovieListApi.Services;
 
 public interface IMovieGenresManager
 {
-    Task<ICollection<MovieGenre>> List();
+    Task<ICollection<MovieGenre>> List(OffsetViewModel offset);
     Task<(bool success, MovieGenre? entity)> Create(MovieGenreViewModel model);
 }

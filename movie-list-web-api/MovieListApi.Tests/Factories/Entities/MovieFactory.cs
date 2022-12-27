@@ -11,7 +11,6 @@ public static class MovieFactory
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
 
-        entity.Id = _random.Next();
         entity.Title = Guid.NewGuid().ToString();
         entity.ReleaseDate = DateTime.Now;
         entity.Country = Guid.NewGuid().ToString();

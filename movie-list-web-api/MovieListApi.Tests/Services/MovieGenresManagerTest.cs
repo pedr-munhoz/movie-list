@@ -26,21 +26,30 @@ public class MovieGenresManagerTest
         _manager = new MovieGenresManager(_dbContext);
     }
 
-    [Fact]
-    public async Task List_WhenCalled_ReturnsListMovieOfGenres()
+    [Theory]
+    [InlineData(0, 10)]
+    [InlineData(3, 7)]
+    public async Task List_WhenCalled_ReturnsListOfMovieGenres(int index, int length)
     {
         // Given
-        var entities = new List<MovieGenre>().Build();
-        await _dbContext.MovieGenres.AddRangeAsync(entities);
+        var skipped = new List<MovieGenre>().Build(count: index);
+        var selected = new List<MovieGenre>().Build(count: length);
+        var leftover = new List<MovieGenre>().Build();
+
+        await _dbContext.MovieGenres.AddRangeAsync(skipped);
+        await _dbContext.MovieGenres.AddRangeAsync(selected);
+        await _dbContext.MovieGenres.AddRangeAsync(leftover);
 
         await _dbContext.SaveChangesAsync();
 
+        var offset = new OffsetViewModel { Index = index, Length = length };
+
         // When
-        var result = await _manager.List();
+        var result = await _manager.List(offset);
 
         // Then
-        Assert.Equal(entities.Count, result.Count);
-        Assert.True(result.SequenceEqual(entities));
+        Assert.Equal(length, result.Count);
+        Assert.True(result.SequenceEqual(selected));
     }
 
     [Fact]

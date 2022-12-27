@@ -11,6 +11,7 @@ namespace MovieListApi.Services;
 
 public class MovieGenresManager : IMovieGenresManager
 {
+    public const int BaseLength = 30;
     private readonly MoviesDbContext _dbContext;
 
     public MovieGenresManager(MoviesDbContext dbContext)
@@ -27,9 +28,16 @@ public class MovieGenresManager : IMovieGenresManager
 
         return (true, entity);
     }
-    public async Task<ICollection<MovieGenre>> List()
+    public async Task<ICollection<MovieGenre>> List(OffsetViewModel offset)
     {
-        var entities = await _dbContext.MovieGenres.ToListAsync();
+        var index = offset.Index ?? 0;
+        var length = offset.Length ?? BaseLength;
+
+        var entities = await _dbContext.MovieGenres
+            .OrderBy(x => x.Id)
+            .Skip(index)
+            .Take(length)
+            .ToListAsync();
 
         return entities;
     }
