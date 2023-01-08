@@ -35,7 +35,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = 0, Length = 20 };
+        var offset = new ListMoviesViewModel { Index = 0, Length = 20 };
 
         // When
         var result = await _manager.ListMoviesToWatch(offset);
@@ -61,7 +61,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = index, Length = length };
+        var offset = new ListMoviesViewModel { Index = index, Length = length };
 
         // When
         var result = await _manager.ListMoviesToWatch(offset);
@@ -85,7 +85,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = null, Length = null };
+        var offset = new ListMoviesViewModel { Index = null, Length = null };
 
         // When
         var result = await _manager.ListMoviesToWatch(offset);
@@ -93,6 +93,30 @@ public class MoviesManagerTest
         // Then
         Assert.Equal(length, result.Count);
         Assert.True(result.SequenceEqual(selected));
+    }
+
+    [Fact]
+    public async Task ListMoviesToWatch_WhenFilteredByTitle_ReturnsFilteredMoviesToWatch()
+    {
+        // Given
+        var title = "A Specific Title";
+
+        var entities = new List<Movie>().Build(count: 10);
+        await _dbContext.Movies.AddRangeAsync(entities);
+
+        var selectedEntity = new Movie().Build().WithTitle(title);
+        await _dbContext.Movies.AddAsync(selectedEntity);
+
+        await _dbContext.SaveChangesAsync();
+
+        var model = new ListMoviesViewModel().Build().WithTitle(title);
+
+        // When
+        var result = await _manager.ListMoviesToWatch(model);
+
+        // Then
+        Assert.Single(result);
+        Assert.Equal(selectedEntity, result.FirstOrDefault());
     }
 
     [Fact]
@@ -107,7 +131,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = 0, Length = 20 };
+        var offset = new ListMoviesViewModel { Index = 0, Length = 20 };
 
         // When
         var result = await _manager.ListWatchedMovies(offset);
@@ -133,7 +157,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = index, Length = length };
+        var offset = new ListMoviesViewModel { Index = index, Length = length };
 
         // When
         var result = await _manager.ListWatchedMovies(offset);
@@ -157,7 +181,7 @@ public class MoviesManagerTest
 
         await _dbContext.SaveChangesAsync();
 
-        var offset = new OffsetViewModel { Index = null, Length = null };
+        var offset = new ListMoviesViewModel { Index = null, Length = null };
 
         // When
         var result = await _manager.ListWatchedMovies(offset);

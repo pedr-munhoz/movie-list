@@ -1,4 +1,5 @@
 using MovieListApi.Models.ViewModels;
+using MovieListApi.Tests.Utils;
 
 namespace MovieListApi.Tests.Factories.ViewModels;
 
@@ -8,6 +9,34 @@ public static class ListMoviesViewModelFactory
     {
         model.Index = 0;
         model.Length = 30;
+
+        return model;
+    }
+
+    public static ListMoviesViewModel WithTitle(this ListMoviesViewModel model, string? title)
+    {
+        model.Title = title;
+
+        return model;
+    }
+
+    public static ListMoviesViewModel WithReleaseDate(this ListMoviesViewModel model, string? date)
+    {
+        model.ReleaseDate = date.ToDateTime();
+
+        return model;
+    }
+
+    public static ListMoviesViewModel WithCountry(this ListMoviesViewModel model, string? country)
+    {
+        model.Country = country;
+
+        return model;
+    }
+
+    public static ListMoviesViewModel WithGenreId(this ListMoviesViewModel model, int? genreId)
+    {
+        model.GenreId = genreId;
 
         return model;
     }

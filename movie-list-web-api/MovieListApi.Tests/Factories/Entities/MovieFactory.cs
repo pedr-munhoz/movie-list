@@ -33,6 +33,13 @@ public static class MovieFactory
         return entity;
     }
 
+    public static Movie WithTitle(this Movie entity, string title)
+    {
+        entity.Title = title;
+
+        return entity;
+    }
+
     public static List<Movie> Build(this List<Movie> entities, int? count = null)
     {
         count = count ?? _random.Next(50);

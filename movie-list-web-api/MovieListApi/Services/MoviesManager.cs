@@ -70,13 +70,14 @@ public class MoviesManager : IMoviesManager
         return (true, entity);
     }
 
-    public async Task<ICollection<Movie>> ListMoviesToWatch(OffsetViewModel offset)
+    public async Task<ICollection<Movie>> ListMoviesToWatch(ListMoviesViewModel model)
     {
-        var index = offset.Index ?? 0;
-        var length = offset.Length ?? BaseLength;
+        var index = model.Index ?? 0;
+        var length = model.Length ?? BaseLength;
 
         var entities = await _dbContext.Movies
             .Where(x => !x.Watched)
+            .Where(x => model.Title == null || x.Title == model.Title)
             .OrderBy(x => x.Id)
             .Skip(index)
             .Take(length)
@@ -85,10 +86,10 @@ public class MoviesManager : IMoviesManager
         return entities;
     }
 
-    public async Task<ICollection<Movie>> ListWatchedMovies(OffsetViewModel offset)
+    public async Task<ICollection<Movie>> ListWatchedMovies(ListMoviesViewModel model)
     {
-        var index = offset.Index ?? 0;
-        var length = offset.Length ?? BaseLength;
+        var index = model.Index ?? 0;
+        var length = model.Length ?? BaseLength;
 
         var entities = await _dbContext.Movies
             .Where(x => x.Watched)

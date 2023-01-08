@@ -30,7 +30,7 @@ public class MoviesControllerTests
         var movieList = new List<Movie>().Build();
         var model = new ListMoviesViewModel().Build();
 
-        _manager.MockListMoviesToWatch(movies: movieList, offset: model);
+        _manager.MockListMoviesToWatch(movies: movieList, model: model);
 
         // When
         var actionResult = await _controller.ListMoviesToWatch(model);
@@ -50,7 +50,7 @@ public class MoviesControllerTests
         var movieList = new List<Movie>().Build().Watched();
         var offset = new ListMoviesViewModel().Build();
 
-        _manager.MockListWatchedMovies(movies: movieList, offset: offset);
+        _manager.MockListWatchedMovies(movies: movieList, model: offset);
 
         // When
         var actionResult = await _controller.ListWatchedMovies(offset);

@@ -11,9 +11,9 @@ public static class MoviesManagerFactory
     public static Mock<IMoviesManager> MockListMoviesToWatch(
         this Mock<IMoviesManager> service,
         ICollection<Movie> movies,
-        OffsetViewModel offset)
+        ListMoviesViewModel model)
     {
-        service.Setup(x => x.ListMoviesToWatch(offset)).ReturnsAsync(movies);
+        service.Setup(x => x.ListMoviesToWatch(model)).ReturnsAsync(movies);
 
         return service;
     }
@@ -21,9 +21,9 @@ public static class MoviesManagerFactory
     public static Mock<IMoviesManager> MockListWatchedMovies(
         this Mock<IMoviesManager> service,
         ICollection<Movie> movies,
-        OffsetViewModel offset)
+        ListMoviesViewModel model)
     {
-        service.Setup(x => x.ListWatchedMovies(offset)).ReturnsAsync(movies);
+        service.Setup(x => x.ListWatchedMovies(model)).ReturnsAsync(movies);
 
         return service;
     }
