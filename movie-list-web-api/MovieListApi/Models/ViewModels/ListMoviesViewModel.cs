@@ -10,5 +10,5 @@ public class ListMoviesViewModel : OffsetViewModel
     public string? Title { get; set; }
     public DateTime? ReleaseDate { get; set; }
     public string? Country { get; set; }
-    public int? GenreId { get; set; }
+    public string? GenreId { get; set; }
 }

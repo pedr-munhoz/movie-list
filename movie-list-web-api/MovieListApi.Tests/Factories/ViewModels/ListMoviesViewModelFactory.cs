@@ -20,6 +20,13 @@ public static class ListMoviesViewModelFactory
         return model;
     }
 
+    public static ListMoviesViewModel WithReleaseDate(this ListMoviesViewModel model, DateTime? date)
+    {
+        model.ReleaseDate = date;
+
+        return model;
+    }
+
     public static ListMoviesViewModel WithReleaseDate(this ListMoviesViewModel model, string? date)
     {
         model.ReleaseDate = date.ToDateTime();
@@ -34,7 +41,7 @@ public static class ListMoviesViewModelFactory
         return model;
     }
 
-    public static ListMoviesViewModel WithGenreId(this ListMoviesViewModel model, int? genreId)
+    public static ListMoviesViewModel WithGenreId(this ListMoviesViewModel model, string? genreId)
     {
         model.GenreId = genreId;
 

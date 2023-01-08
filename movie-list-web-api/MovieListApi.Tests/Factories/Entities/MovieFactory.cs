@@ -40,6 +40,20 @@ public static class MovieFactory
         return entity;
     }
 
+    public static Movie WithReleaseDate(this Movie entity, DateTime date)
+    {
+        entity.ReleaseDate = date;
+
+        return entity;
+    }
+
+    public static Movie WithCountry(this Movie entity, string country)
+    {
+        entity.Country = country;
+
+        return entity;
+    }
+
     public static List<Movie> Build(this List<Movie> entities, int? count = null)
     {
         count = count ?? _random.Next(50);

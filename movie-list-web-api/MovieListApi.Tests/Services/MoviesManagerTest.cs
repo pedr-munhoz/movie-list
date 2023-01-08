@@ -120,6 +120,78 @@ public class MoviesManagerTest
     }
 
     [Fact]
+    public async Task ListMoviesToWatch_WhenFilteredByCountry_ReturnsFilteredMoviesToWatch()
+    {
+        // Given
+        var country = "A Specific Country";
+
+        var entities = new List<Movie>().Build(count: 10);
+        await _dbContext.Movies.AddRangeAsync(entities);
+
+        var selectedEntity = new Movie().Build().WithCountry(country);
+        await _dbContext.Movies.AddAsync(selectedEntity);
+
+        await _dbContext.SaveChangesAsync();
+
+        var model = new ListMoviesViewModel().Build().WithCountry(country);
+
+        // When
+        var result = await _manager.ListMoviesToWatch(model);
+
+        // Then
+        Assert.Single(result);
+        Assert.Equal(selectedEntity, result.FirstOrDefault());
+    }
+
+    [Fact]
+    public async Task ListMoviesToWatch_WhenFilteredByReleaseDate_ReturnsFilteredMoviesToWatch()
+    {
+        // Given
+        var releaseDate = new DateTime(year: 1997, month: 4, day: 29);
+
+        var entities = new List<Movie>().Build(count: 10);
+        await _dbContext.Movies.AddRangeAsync(entities);
+
+        var selectedEntity = new Movie().Build().WithReleaseDate(releaseDate);
+        await _dbContext.Movies.AddAsync(selectedEntity);
+
+        await _dbContext.SaveChangesAsync();
+
+        var model = new ListMoviesViewModel().Build().WithReleaseDate(releaseDate);
+
+        // When
+        var result = await _manager.ListMoviesToWatch(model);
+
+        // Then
+        Assert.Single(result);
+        Assert.Equal(selectedEntity, result.FirstOrDefault());
+    }
+
+    [Fact]
+    public async Task ListMoviesToWatch_WhenFilteredByGenre_ReturnsFilteredMoviesToWatch()
+    {
+        // Given
+        var genre = new MovieGenre().Build();
+
+        var entities = new List<Movie>().Build(count: 10);
+        await _dbContext.Movies.AddRangeAsync(entities);
+
+        var selectedEntity = new Movie().Build().WithGenre(genre);
+        await _dbContext.Movies.AddAsync(selectedEntity);
+
+        await _dbContext.SaveChangesAsync();
+
+        var model = new ListMoviesViewModel().Build().WithGenreId(genre.Id.ToStringId());
+
+        // When
+        var result = await _manager.ListMoviesToWatch(model);
+
+        // Then
+        Assert.Single(result);
+        Assert.Equal(selectedEntity, result.FirstOrDefault());
+    }
+
+    [Fact]
     public async Task ListWatchedMovies_WhenCalled_ReturnsOnlyWatchedMovies()
     {
         // Given

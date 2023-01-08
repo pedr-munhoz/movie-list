@@ -75,9 +75,15 @@ public class MoviesManager : IMoviesManager
         var index = model.Index ?? 0;
         var length = model.Length ?? BaseLength;
 
+        var genreId = model.GenreId?.ToIntId();
+
         var entities = await _dbContext.Movies
+            .Include(x => x.Genres)
             .Where(x => !x.Watched)
             .Where(x => model.Title == null || x.Title == model.Title)
+            .Where(x => model.Country == null || x.Country == model.Country)
+            .Where(x => model.ReleaseDate == null || x.ReleaseDate == model.ReleaseDate)
+            .Where(x => model.GenreId == null || x.Genres.Any(y => y.Id == genreId))
             .OrderBy(x => x.Id)
             .Skip(index)
             .Take(length)
