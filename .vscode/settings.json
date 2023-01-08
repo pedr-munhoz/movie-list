@@ -1,3 +1,4 @@
 {
-  "csharpextensions.useFileScopedNamespace": true
+  "csharpextensions.useFileScopedNamespace": true,
+  "dotnet-test-explorer.testProjectPath": "**/*.sln"
 }

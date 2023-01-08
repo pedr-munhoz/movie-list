@@ -28,12 +28,12 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build();
-        var offset = new OffsetViewModel().Build();
+        var model = new ListMoviesViewModel().Build();
 
-        _manager.MockListMoviesToWatch(movies: movieList, offset: offset);
+        _manager.MockListMoviesToWatch(movies: movieList, offset: model);
 
         // When
-        var actionResult = await _controller.ListMoviesToWatch(offset);
+        var actionResult = await _controller.ListMoviesToWatch(model);
         var (successfullyParsed, collectionResult) = actionResult.Parse<ICollection<MovieResult>>();
 
         // Then
@@ -48,7 +48,7 @@ public class MoviesControllerTests
     {
         // Given
         var movieList = new List<Movie>().Build().Watched();
-        var offset = new OffsetViewModel().Build();
+        var offset = new ListMoviesViewModel().Build();
 
         _manager.MockListWatchedMovies(movies: movieList, offset: offset);
 
